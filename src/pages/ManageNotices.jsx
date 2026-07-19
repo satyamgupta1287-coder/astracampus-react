@@ -40,7 +40,7 @@ export default function ManageNotices() {
 
     const handlePost = async (e) => {
         e.preventDefault();
-        if (!adminSchoolId) return alert("School ID missing!");
+        if (!adminSchoolId) return console.log("School ID missing!");
 
         setIsPosting(true);
         try {
@@ -51,19 +51,19 @@ export default function ManageNotices() {
                 description,
                 createdAt: serverTimestamp()
             });
-            alert("Announcement Posted Successfully! 📢");
+            console.log("Announcement Posted Successfully! 📢");
             setTitle("");
             setTargetClass("All");
             setDescription("");
         } catch (err) {
-            alert("Error: " + err.message);
+            console.log("Error: " + err.message);
         } finally {
             setIsPosting(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this notice?")) {
+        if (true || window.confirm("Are you sure you want to delete this notice?")) {
             await deleteDoc(doc(db, "announcements", id));
         }
     };

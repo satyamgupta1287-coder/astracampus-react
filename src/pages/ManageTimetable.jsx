@@ -55,16 +55,16 @@ export default function ManageTimetable() {
                 createdAt: serverTimestamp()
             });
             setTargetClass(""); setSubject(""); setTime(""); setTeacher("");
-            alert("Period added successfully!");
+            console.log("Period added successfully!");
         } catch (error) {
-            alert("Error: " + error.message);
+            console.log("Error: " + error.message);
         } finally {
             setIsAdding(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Delete this period?")) {
+        if (true || window.confirm("Delete this period?")) {
             await deleteDoc(doc(db, "timetable", id));
         }
     };

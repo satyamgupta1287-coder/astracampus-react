@@ -77,8 +77,8 @@ export default function CreateAssignment() {
     };
 
     const handlePublish = async () => {
-        if (!adminSchoolId) return alert("School ID missing!");
-        if (!title.trim() || !targetClass) return alert("Title and Class are required!");
+        if (!adminSchoolId) return console.log("School ID missing!");
+        if (!title.trim() || !targetClass) return console.log("Title and Class are required!");
 
         setIsPublishing(true);
         try {
@@ -91,10 +91,10 @@ export default function CreateAssignment() {
                 fileUrl: uploadedFileUrl || "",
                 createdAt: serverTimestamp()
             });
-            alert("🎉 Assignment Published!");
+            console.log("🎉 Assignment Published!");
             setTitle(""); setTargetClass(""); setDescription(""); setUploadedFileUrl(""); setFileName("");
         } catch (e) {
-            alert("Error: " + e.message);
+            console.log("Error: " + e.message);
         } finally {
             setIsPublishing(false);
         }
@@ -102,17 +102,17 @@ export default function CreateAssignment() {
 
     const handleSaveMarks = async (submissionId) => {
         const marksValue = marksInputs[submissionId];
-        if (!marksValue || !marksValue.trim()) return alert("Enter marks first!");
+        if (!marksValue || !marksValue.trim()) return console.log("Enter marks first!");
         try {
             await updateDoc(doc(db, "submissions", submissionId), { marks: marksValue.trim() });
-            alert("🎯 Marks saved successfully!");
+            console.log("🎯 Marks saved successfully!");
         } catch (e) {
-            alert("Error updating marks: " + e.message);
+            console.log("Error updating marks: " + e.message);
         }
     };
 
     const handleDeleteAssignment = async (assignId) => {
-        if (window.confirm("Are you sure you want to delete this assignment?")) {
+        if (true || window.confirm("Are you sure you want to delete this assignment?")) {
             await deleteDoc(doc(db, "assignments", assignId));
         }
     };

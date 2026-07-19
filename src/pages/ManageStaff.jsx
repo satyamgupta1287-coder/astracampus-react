@@ -32,7 +32,7 @@ export default function ManageStaff() {
                 if (adminDoc.exists() && adminDoc.data().role === 'admin') {
                     setAdminSchoolId(adminDoc.data().schoolId);
                 } else {
-                    alert("Unauthorized Access!");
+                    console.log("Unauthorized Access!");
                     navigate('/');
                 }
             } else {
@@ -95,7 +95,7 @@ export default function ManageStaff() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!adminSchoolId) return alert("School ID missing!");
+        if (!adminSchoolId) return console.log("School ID missing!");
 
         setIsSaving(true);
         const staffData = {
@@ -116,11 +116,11 @@ export default function ManageStaff() {
         try {
             if (currentEditId) {
                 await updateDoc(doc(db, "users", currentEditId), staffData);
-                alert("Record Updated!");
+                console.log("Record Updated!");
             } else {
                 staffData.createdAt = serverTimestamp();
                 await addDoc(collection(db, "users"), staffData);
-                alert(`${staffData.role.toUpperCase()} added successfully!`);
+                console.log(`${staffData.role.toUpperCase()} added successfully!`);
             }
             setCurrentEditId(null);
             setFormData({
@@ -130,7 +130,7 @@ export default function ManageStaff() {
             });
             setActiveTab('listTab');
         } catch (error) {
-            alert("Error: " + error.message);
+            console.log("Error: " + error.message);
         } finally {
             setIsSaving(false);
         }
@@ -155,9 +155,9 @@ export default function ManageStaff() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Delete this staff member permanently?")) {
+        if (true || window.confirm("Delete this staff member permanently?")) {
             await deleteDoc(doc(db, "users", id));
-            alert("Deleted!");
+            console.log("Deleted!");
             loadStaff();
         }
     };

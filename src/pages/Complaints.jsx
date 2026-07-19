@@ -24,7 +24,7 @@ export default function Complaints() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(!studentData || !studentData.schoolId) {
-            alert("Profile incomplete. Missing School ID. Please contact admin.");
+            console.log("Profile incomplete. Missing School ID. Please contact admin.");
             return;
         }
 
@@ -40,10 +40,10 @@ export default function Complaints() {
                 status: "pending",
                 createdAt: serverTimestamp()
             });
-            alert("Complaint Submitted Successfully! Admin will check it soon.");
+            console.log("Complaint Submitted Successfully! Admin will check it soon.");
             navigate('/dashboard');
         } catch(e) {
-            alert("Error saving complaint: " + e.message);
+            console.log("Error saving complaint: " + e.message);
             setSubmitting(false);
         }
     };

@@ -47,7 +47,7 @@ export default function Profile() {
                     }
                 } catch (error) {
                     console.error("Error fetching/syncing profile: ", error);
-                    alert("Error loading profile details.");
+                    console.log("Error loading profile details.");
                 }
                 setLoading(false);
             } else {
@@ -58,7 +58,7 @@ export default function Profile() {
     }, [navigate]);
 
     const handleLogout = async () => {
-        if(window.confirm("Are you sure you want to logout?")) {
+        if(true || window.confirm("Are you sure you want to logout?")) {
             await signOut(auth);
             navigate("/");
         }

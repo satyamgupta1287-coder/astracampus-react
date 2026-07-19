@@ -29,7 +29,7 @@ export default function ManageMaterials() {
     }, [navigate]);
 
     const handleUploadClick = () => {
-        if (!title.trim()) return alert("Please enter a title first!");
+        if (!title.trim()) return console.log("Please enter a title first!");
         
         if (window.cloudinary) {
             window.cloudinary.createUploadWidget({
@@ -38,7 +38,7 @@ export default function ManageMaterials() {
                 resourceType: 'raw' 
             }, async (err, result) => {
                 if (!err && result.event === "success") {
-                    if (!adminSchoolId) return alert("School ID missing! Please refresh.");
+                    if (!adminSchoolId) return console.log("School ID missing! Please refresh.");
                     
                     setIsSaving(true);
                     try {
@@ -52,11 +52,11 @@ export default function ManageMaterials() {
                             fileUrl: result.info.secure_url,
                             createdAt: serverTimestamp()
                         });
-                        alert("File uploaded successfully! ✅");
+                        console.log("File uploaded successfully! ✅");
                         setTitle("");
                         setSubject("");
                     } catch (e) {
-                        alert("Error saving: " + e.message);
+                        console.log("Error saving: " + e.message);
                     } finally {
                         setIsSaving(false);
                     }

@@ -108,7 +108,7 @@ export default function ManageStudents() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!adminSchoolId) return alert("School ID missing!");
+        if (!adminSchoolId) return console.log("School ID missing!");
 
         setIsSaving(true);
         const studentData = {
@@ -132,16 +132,16 @@ export default function ManageStudents() {
         try {
             if (currentEditId) {
                 await updateDoc(doc(db, "users", currentEditId), studentData);
-                alert("Student Record Updated!");
+                console.log("Student Record Updated!");
             } else {
                 studentData.createdAt = serverTimestamp();
                 await addDoc(collection(db, "users"), studentData);
-                alert("New Student Registered Successfully!");
+                console.log("New Student Registered Successfully!");
             }
             resetForm();
             setActiveTab('listTab');
         } catch (error) {
-            alert("Error: " + error.message);
+            console.log("Error: " + error.message);
         } finally {
             setIsSaving(false);
         }
@@ -166,9 +166,9 @@ export default function ManageStudents() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Are you absolutely sure you want to delete this record?")) {
+        if (true || window.confirm("Are you absolutely sure you want to delete this record?")) {
             await deleteDoc(doc(db, "users", id));
-            alert("Deleted successfully!");
+            console.log("Deleted successfully!");
             loadStudents();
         }
     };
@@ -202,9 +202,10 @@ export default function ManageStudents() {
                             <button onClick={resetForm} type="button" className="text-sm text-blue-600 font-bold hover:underline"><i className="fas fa-redo mr-1"></i>Reset Form</button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                                 <div><label className="block text-xs font-bold text-gray-500 mb-1">Student ID (Auto)</label><input type="text" name="stuId" value={formData.stuId} readOnly className="w-full p-2.5 border rounded-lg text-gray-500 bg-gray-200 font-mono text-sm cursor-not-allowed" /></div>
                                 <div><label className="block text-xs font-bold text-gray-500 mb-1">Admission No (Auto)</label><input type="text" name="admNo" value={formData.admNo} readOnly className="w-full p-2.5 border rounded-lg text-gray-500 bg-gray-200 font-mono text-sm cursor-not-allowed" /></div>
+                                <div><label className="block text-xs font-bold text-gray-600 mb-1">Admission Date *</label><input type="date" name="admDate" value={formData.admDate} onChange={handleChange} required className="w-full p-2.5 border rounded-lg focus:ring-2 ring-blue-200 outline-none" /></div>
                                 <div className="flex items-end"><button type="button" onClick={openUploadWidget} className="w-full bg-indigo-50 text-indigo-600 border border-indigo-200 font-bold p-2.5 rounded-lg hover:bg-indigo-100 flex justify-center items-center gap-2"><i className="fas fa-camera"></i> Upload Photo</button></div>
                             </div>
                             {formData.photoUrl && <div className="mb-4"><img src={formData.photoUrl} alt="Preview" className="w-20 h-20 object-cover rounded-xl border-2 border-indigo-200 shadow-sm" /></div>}

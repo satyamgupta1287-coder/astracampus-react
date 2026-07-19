@@ -83,7 +83,7 @@ export default function Assignments() {
                     setUploadAlert(true);
                     setTimeout(() => setUploadAlert(false), 4000);
                 } catch (error) {
-                    alert("Database Error: " + error.message);
+                    console.log("Database Error: " + error.message);
                 }
             }
         }).open();

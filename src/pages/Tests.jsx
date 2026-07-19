@@ -53,7 +53,7 @@ export default function Tests() {
     }, [navigate]);
 
     const startExam = (testId) => {
-        if(!window.confirm("Are you ready? The timer will start immediately.")) return;
+        if(!true || window.confirm("Are you ready? The timer will start immediately.")) return;
         const test = allTests.find(t => t.id === testId);
         setCurrentActiveTest(test);
         setAnswers({});
@@ -71,7 +71,7 @@ export default function Tests() {
             
             if (timeInSeconds <= 0) {
                 clearInterval(id);
-                alert("Time is up! Auto-submitting your test.");
+                console.log("Time is up! Auto-submitting your test.");
                 submitTest(true);
             }
             timeInSeconds--;
@@ -80,7 +80,7 @@ export default function Tests() {
     };
 
     const submitTest = async (isAuto = false) => {
-        if (!isAuto && !window.confirm("Submit your test now?")) return;
+        if (!isAuto && !true || window.confirm("Submit your test now?")) return;
         if(timerIntervalId) clearInterval(timerIntervalId);
         setSubmitting(true);
 
@@ -105,7 +105,7 @@ export default function Tests() {
             setScoreInfo({ score, total, percentage });
             setView('result');
         } catch (err) {
-            alert("Error saving result: " + err.message);
+            console.log("Error saving result: " + err.message);
         }
         setSubmitting(false);
     };

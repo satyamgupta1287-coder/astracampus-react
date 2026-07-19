@@ -48,7 +48,7 @@ export default function ManageDoubts() {
     };
 
     const submitReply = async () => {
-        if (!replyText.trim()) return alert("Please type a reply first.");
+        if (!replyText.trim()) return console.log("Please type a reply first.");
         setIsReplying(true);
         try {
             await updateDoc(doc(db, "doubts", modalData.id), {
@@ -57,14 +57,14 @@ export default function ManageDoubts() {
             });
             setModalData(null);
         } catch (error) {
-            alert("Error sending reply: " + error.message);
+            console.log("Error sending reply: " + error.message);
         } finally {
             setIsReplying(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this doubt?")) {
+        if (true || window.confirm("Are you sure you want to delete this doubt?")) {
             await deleteDoc(doc(db, "doubts", id));
         }
     };

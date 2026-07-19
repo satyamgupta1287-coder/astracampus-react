@@ -12,7 +12,6 @@ import {
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
   FaPowerOff,
-  FaChevronRight,
   FaVideo,
   FaBookOpen,
   FaClipboardList,
@@ -26,15 +25,12 @@ import {
   FaCommentDots,
   FaCommentAlt,
   FaBullhorn,
-  FaRegClock,
   FaPlay,
   FaHome,
   FaUser,
   FaChalkboardTeacher,
-  FaQuestionCircle,
-  FaBell,
-  FaEdit,
-  FaGraduationCap,
+  FaChevronRight,
+  FaRegClock
 } from "react-icons/fa";
 
 export default function Dashboard() {
@@ -48,6 +44,7 @@ export default function Dashboard() {
     batchName: "...",
     photoUrl: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
     targetClass: "",
+    schoolId: "",
   });
 
   const [stats, setStats] = useState({ attendance: "--%", fees: "₹0" });
@@ -59,10 +56,10 @@ export default function Dashboard() {
     const hour = new Date().getHours();
     setGreeting(
       hour < 12
-        ? "Good Morning"
+        ? "Good Morning,"
         : hour < 18
-          ? "Good Afternoon"
-          : "Good Evening",
+        ? "Good Afternoon,"
+        : "Good Evening,"
     );
 
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
@@ -85,42 +82,80 @@ export default function Dashboard() {
                 data.photoBase64 ||
                 "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
               targetClass: targetClassStr,
+              schoolId: schoolId,
             });
 
+            // Fees
+            const totalFee = data.totalFee || 0;
+            const paidFee = data.paidFee || 0;
+            const pendingFee = totalFee - paidFee;
+            setStats((prev) => ({ ...prev, fees: `₹${pendingFee}` }));
+
             if (schoolId && targetClassStr) {
+              // Assignments Logic
+              const assignQ = query(
+                collection(db, "assignments"),
+                where("schoolId", "==", schoolId)
+              );
+              onSnapshot(assignQ, (snap) => {
+                let filtered = snap.docs.filter(d => String(d.data().targetClass || d.data().className || "") === targetClassStr);
+                setBadges((prev) => ({ ...prev, assignments: filtered.length }));
+              });
+
+              // Live Classes Logic
               const liveQ = query(
                 collection(db, "live_classes"),
-                where("schoolId", "==", schoolId),
-                where("targetClass", "==", targetClassStr),
+                where("schoolId", "==", schoolId)
               );
               onSnapshot(liveQ, (snap) => {
+                let filtered = snap.docs.filter(d => String(d.data().targetClass || d.data().className || "") === targetClassStr);
+                
                 let classes = [];
-                snap.forEach((d) => classes.push({ id: d.id, ...d.data() }));
-                classes.sort(
-                  (a, b) =>
-                    (a.startTime?.toMillis() || 0) -
-                    (b.startTime?.toMillis() || 0),
-                );
+                filtered.forEach((d) => classes.push({ id: d.id, ...d.data() }));
+                
+                classes.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+                
                 setLiveClasses(classes);
               });
             }
 
             if (schoolId) {
+              // Notices Logic
               const noticeQ = query(
-                collection(db, "notices"),
-                where("schoolId", "==", schoolId),
+                collection(db, "announcements"),
+                where("schoolId", "==", schoolId)
               );
               onSnapshot(noticeQ, (snap) => {
-                let notices = [];
-                snap.forEach((d) => notices.push({ id: d.id, ...d.data() }));
-                notices.sort(
-                  (a, b) =>
-                    (b.createdAt?.toMillis() || 0) -
-                    (a.createdAt?.toMillis() || 0),
-                );
-                if (notices.length > 0) setNotice(notices[0]);
+                let allNotices = [];
+                snap.forEach((d) => allNotices.push({ id: d.id, ...d.data() }));
+                allNotices.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+                
+                if (allNotices.length > 0) setNotice(allNotices[0]);
+              });
+
+              // Attendance Logic
+              const attQ = query(
+                collection(db, "attendance"),
+                where("schoolId", "==", schoolId)
+              );
+              onSnapshot(attQ, (snap) => {
+                let presentCount = 0;
+                let totalCount = 0;
+                
+                snap.forEach(docSnap => {
+                    const attData = docSnap.data();
+                    if(attData.studentId === user.uid || attData.studentEmail === user.email) {
+                        totalCount++;
+                        if(attData.status === 'present') presentCount++;
+                    }
+                });
+                
+                let percentage = totalCount === 0 ? "N/A" : Math.round((presentCount / totalCount) * 100) + "%";
+                setStats((prev) => ({ ...prev, attendance: percentage }));
               });
             }
+          } else {
+             navigate("/");
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -134,368 +169,252 @@ export default function Dashboard() {
   }, [navigate]);
 
   const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/");
-    } catch (error) {
-      console.error("Logout Error:", error);
+    if(true || window.confirm("Are you sure you want to log out?")) {
+      try {
+        await signOut(auth);
+        navigate("/");
+      } catch (error) {
+        console.error("Logout Error:", error);
+      }
     }
   };
 
-  const getFirstName = (fullName) => {
-    return fullName.split(" ")[0];
-  };
-
   return (
-    <div className="bg-[#f8fafc] min-h-screen pb-24 font-sans text-slate-800">
-      {/* Header Section */}
-      <div className="bg-gradient-to-br from-indigo-600 via-blue-600 to-blue-700 text-white px-6 pt-10 pb-20 rounded-b-[40px] shadow-xl relative overflow-hidden">
-        {/* Abstract Background Shapes */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400 opacity-10 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/4"></div>
+    <div className="bg-[#f8fafc] min-h-screen pb-24 font-sans text-slate-800 selection:bg-indigo-100 no-scrollbar">
+      <div className="max-w-md mx-auto min-h-screen relative">
 
-        <div className="flex justify-between items-center relative z-10">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <img
-                src={userData.photoUrl}
-                alt="Profile"
-                className="w-14 h-14 rounded-full border-2 border-white shadow-md object-cover bg-white"
-              />
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-400 border-2 border-indigo-600 rounded-full"></div>
-            </div>
+        {/* Top Header */}
+        <div className="flex justify-between items-center px-6 pt-8 pb-2">
             <div>
-              <p className="text-blue-100 text-sm font-medium tracking-wide">
-                {greeting},
-              </p>
-              <h1 className="text-xl font-bold tracking-tight text-white leading-tight">
-                {getFirstName(userData.name)}
-              </h1>
+                <p className="text-sm text-slate-500 font-medium">{greeting}</p>
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight truncate w-48">{userData.name}</h1>
             </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all text-white active:scale-95 border border-white/20 shadow-sm"
-          >
-            <FaPowerOff className="text-sm" />
-          </button>
+            <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-full overflow-hidden bg-slate-200 shadow-sm shrink-0 border border-slate-200">
+                    <img src={userData.photoUrl} className="w-full h-full object-cover" alt="Profile" />
+                </div>
+                <button onClick={handleLogout} className="w-9 h-9 flex items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-100 transition shadow-sm border border-red-100">
+                    <FaPowerOff className="text-sm" />
+                </button>
+            </div>
         </div>
 
-        {/* Quick Stats Banner */}
-        <div className="flex justify-between mt-8 relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-inner">
-          <div className="flex flex-col">
-            <span className="text-blue-200 text-[10px] uppercase font-bold tracking-wider mb-1">
-              Class
-            </span>
-            <span className="text-white font-semibold text-lg flex items-center gap-2">
-              <FaGraduationCap className="text-indigo-200" />{" "}
-              {userData.batchName}
-            </span>
-          </div>
-          <div className="w-[1px] bg-white/20"></div>
-          <div className="flex flex-col">
-            <span className="text-blue-200 text-[10px] uppercase font-bold tracking-wider mb-1">
-              Student ID
-            </span>
-            <span className="text-white font-semibold text-lg">
-              {userData.studentId}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="px-5 -mt-8 relative z-20 max-w-xl mx-auto space-y-6">
-        {/* Next Live Class Alert */}
-        {liveClasses.length > 0 && (
-          <div className="bg-white rounded-[24px] p-5 shadow-lg border border-slate-100 flex justify-between items-center transform transition-transform hover:-translate-y-1">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 shadow-inner relative">
-                <FaVideo className="text-xl" />
-                <span className="absolute top-0 right-0 w-3 h-3 bg-rose-500 border-2 border-white rounded-full animate-ping"></span>
-                <span className="absolute top-0 right-0 w-3 h-3 bg-rose-500 border-2 border-white rounded-full"></span>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-rose-500 uppercase tracking-widest bg-rose-50 px-2 py-0.5 rounded-md mb-1 inline-block">
-                  Live Soon
-                </span>
-                <h3 className="font-bold text-slate-800 text-sm">
-                  {liveClasses[0].topic}
-                </h3>
-                <p className="text-xs text-slate-500 font-medium">
-                  {liveClasses[0].subject} •{" "}
-                  {new Date(
-                    liveClasses[0].startTime?.toMillis() || 0,
-                  ).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => navigate("/live-classes")}
-              className="bg-slate-900 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all shadow-md"
-            >
-              <FaPlay className="text-xs ml-0.5" />
-            </button>
-          </div>
-        )}
-
-        {/* Categories Grid */}
-        <div>
-          <h2 className="text-lg font-bold text-slate-800 mb-4 px-1 flex items-center gap-2">
-            Academics{" "}
-            <span className="bg-indigo-100 text-indigo-600 text-[10px] px-2 py-1 rounded-full uppercase tracking-widest">
-              Portal
-            </span>
-          </h2>
-          <div className="grid grid-cols-4 gap-y-6 gap-x-3">
-            {[
-              {
-                id: "attendance",
-                icon: FaCalendarCheck,
-                color: "text-emerald-500",
-                bg: "bg-emerald-50",
-                label: "Attendance",
-              },
-              {
-                id: "materials",
-                icon: FaBookOpen,
-                color: "text-blue-500",
-                bg: "bg-blue-50",
-                label: "Materials",
-              },
-              {
-                id: "assignments",
-                icon: FaClipboardList,
-                color: "text-amber-500",
-                bg: "bg-amber-50",
-                label: "Assignments",
-              },
-              {
-                id: "tests",
-                icon: FaLaptopCode,
-                color: "text-purple-500",
-                bg: "bg-purple-50",
-                label: "Tests",
-              },
-              {
-                id: "results",
-                icon: FaTrophy,
-                color: "text-yellow-500",
-                bg: "bg-yellow-50",
-                label: "Results",
-              },
-              {
-                id: "fees",
-                icon: FaWallet,
-                color: "text-teal-500",
-                bg: "bg-teal-50",
-                label: "Fees",
-              },
-              {
-                id: "leave",
-                icon: FaCalendarAlt,
-                color: "text-rose-500",
-                bg: "bg-rose-50",
-                label: "Leave",
-              },
-              {
-                id: "courses",
-                icon: FaChalkboardTeacher,
-                color: "text-indigo-500",
-                bg: "bg-indigo-50",
-                label: "Lectures",
-              },
-              {
-                id: "doubts",
-                icon: FaQuestionCircle,
-                color: "text-pink-500",
-                bg: "bg-pink-50",
-                label: "Doubts",
-              },
-            ].map((item) => (
-              <div
-                key={item.id}
-                onClick={() => navigate(`/${item.id}`)}
-                className="flex flex-col items-center gap-2 cursor-pointer group"
-              >
-                <div
-                  className={`w-14 h-14 rounded-[20px] ${item.bg} flex items-center justify-center ${item.color} text-xl shadow-sm border border-white/50 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-300`}
-                >
-                  <item.icon />
-                </div>
-                <span className="text-[10px] font-semibold text-slate-600 text-center tracking-tight">
-                  {item.label}
-                </span>
-              </div>
-            ))}
-
-            {/* More / Less Toggles */}
-            {!showAllIcons && (
-              <div
-                onClick={() => setShowAllIcons(true)}
-                className="flex flex-col items-center gap-2 cursor-pointer group"
-              >
-                <div className="w-14 h-14 rounded-[20px] bg-slate-100 flex items-center justify-center text-slate-500 text-xl shadow-sm border border-slate-200 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-300">
-                  <FaEllipsisH />
-                </div>
-                <span className="text-[10px] font-semibold text-slate-600 text-center tracking-tight">
-                  More
-                </span>
-              </div>
-            )}
-
-            {showAllIcons && (
-              <>
-                {[
-                  {
-                    id: "timetable",
-                    icon: FaRegClock,
-                    color: "text-indigo-500",
-                    bg: "bg-indigo-50",
-                    label: "Timetable",
-                  },
-                  {
-                    id: "gallery",
-                    icon: FaImages,
-                    color: "text-pink-500",
-                    bg: "bg-pink-50",
-                    label: "Gallery",
-                  },
-                  {
-                    id: "complaints",
-                    icon: FaCommentDots,
-                    color: "text-orange-500",
-                    bg: "bg-orange-50",
-                    label: "Complaint",
-                  },
-                  {
-                    id: "feedback",
-                    icon: FaCommentAlt,
-                    color: "text-sky-500",
-                    bg: "bg-sky-50",
-                    label: "Feedback",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => navigate(`/${item.id}`)}
-                    className="flex flex-col items-center gap-2 cursor-pointer group"
-                  >
-                    <div
-                      className={`w-14 h-14 rounded-[20px] ${item.bg} flex items-center justify-center ${item.color} text-xl shadow-sm border border-white/50 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-300`}
-                    >
-                      <item.icon />
+        {/* Premium Gradient Card */}
+        <div className="px-5 mt-4">
+            <div className="bg-gradient-to-br from-[#1e3a8a] to-[#3730a3] rounded-[24px] p-6 text-white shadow-xl shadow-indigo-900/20 relative overflow-hidden">
+                <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-5 blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 -ml-8 -mb-8 w-24 h-24 rounded-full bg-white opacity-10 blur-xl"></div>
+                
+                <div className="relative z-10 flex justify-between items-start">
+                    <div>
+                        <p className="text-indigo-200 text-[11px] font-bold tracking-wider uppercase mb-1">Student ID</p>
+                        <p className="text-xl font-bold tracking-wide mb-6">{userData.studentId}</p>
                     </div>
-                    <span className="text-[10px] font-semibold text-slate-600 text-center tracking-tight">
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
-                <div
-                  onClick={() => setShowAllIcons(false)}
-                  className="flex flex-col items-center gap-2 cursor-pointer group"
-                >
-                  <div className="w-14 h-14 rounded-[20px] bg-slate-100 flex items-center justify-center text-slate-500 text-2xl shadow-sm border border-slate-200 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-300">
-                    &times;
-                  </div>
-                  <span className="text-[10px] font-semibold text-slate-600 text-center tracking-tight">
-                    Less
-                  </span>
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-lg text-right">
+                        <p className="text-xs font-bold text-white">Class <span>{userData.batchName}</span></p>
+                    </div>
                 </div>
-              </>
-            )}
-          </div>
+
+                <div className="relative z-10 flex justify-between items-end border-t border-white/10 pt-4 mt-2">
+                    <div onClick={() => navigate('/attendance')} className="cursor-pointer active:scale-95 transition bg-white/5 px-2 py-1 -ml-2 rounded-lg">
+                        <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
+                            Attendance <FaChevronRight className="text-[8px]" />
+                        </p>
+                        <p className="text-2xl font-black">{stats.attendance}</p>
+                    </div>
+                    <div className="text-right">
+                        <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-wider mb-1">Fee Due</p>
+                        <p className="text-2xl font-black text-emerald-300">{stats.fees}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {/* Quick Access Grid */}
+        <div className="px-5 mt-8">
+            <h2 className="text-base font-bold text-slate-800 mb-4 px-1">Quick Access</h2>
+            <div className="grid grid-cols-4 gap-y-5 gap-x-4">
+                
+                <div onClick={() => navigate('/live-classes')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-red-500 text-xl">
+                        <FaVideo />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Live Class</span>
+                </div>
+
+                <div onClick={() => navigate('/materials')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-blue-500 text-xl">
+                        <FaBookOpen />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Materials</span>
+                </div>
+
+                <div onClick={() => navigate('/assignments')} className="flex flex-col items-center gap-2 cursor-pointer relative active:scale-95 transition-transform">
+                    {badges.assignments > 0 && <span className="absolute -top-1 right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full border-2 border-slate-50 shadow-sm z-10">{badges.assignments}</span>}
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-emerald-500 text-xl">
+                        <FaClipboardList />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Homework</span>
+                </div>
+
+                <div onClick={() => navigate('/tests')} className="flex flex-col items-center gap-2 cursor-pointer relative active:scale-95 transition-transform">
+                    {badges.tests > 0 && <span className="absolute -top-1 right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full border-2 border-slate-50 shadow-sm z-10">{badges.tests}</span>}
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-purple-500 text-xl">
+                        <FaLaptopCode />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Tests</span>
+                </div>
+
+                <div onClick={() => navigate('/results')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-amber-500 text-xl">
+                        <FaTrophy />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Results</span>
+                </div>
+                
+                <div onClick={() => navigate('/fees')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-teal-600 text-xl">
+                        <FaWallet />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Fees</span>
+                </div>
+
+                <div onClick={() => navigate('/leave')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                    <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-green-600 text-xl">
+                        <FaCalendarCheck />
+                    </div>
+                    <span className="text-[9.5px] font-bold text-slate-600 text-center">Leave</span>
+                </div>
+
+                {!showAllIcons && (
+                    <div onClick={() => setShowAllIcons(true)} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                        <div className="w-14 h-14 rounded-[18px] bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 text-xl transition hover:bg-slate-100">
+                            <FaEllipsisH />
+                        </div>
+                        <span className="text-[9.5px] font-bold text-slate-600 text-center">More</span>
+                    </div>
+                )}
+
+                {showAllIcons && (
+                    <>
+                        <div onClick={() => navigate('/timetable')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                            <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-indigo-500 text-xl">
+                                <FaCalendarAlt />
+                            </div>
+                            <span className="text-[9.5px] font-bold text-slate-600 text-center">Timetable</span>
+                        </div>
+
+                        <div onClick={() => navigate('/gallery')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                            <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-pink-500 text-xl">
+                                <FaImages />
+                            </div>
+                            <span className="text-[9.5px] font-bold text-slate-600 text-center">Gallery</span>
+                        </div>
+
+                        <div onClick={() => navigate('/complaints')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                            <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-orange-500 text-xl">
+                                <FaCommentDots />
+                            </div>
+                            <span className="text-[9.5px] font-bold text-slate-600 text-center">Complaint</span>
+                        </div>
+
+                        <div onClick={() => navigate('/feedback')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                            <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-sky-500 text-xl">
+                                <FaCommentAlt />
+                            </div>
+                            <span className="text-[9.5px] font-bold text-slate-600 text-center">Feedback</span>
+                        </div>
+
+                        {/* And maybe a less button */}
+                        <div onClick={() => setShowAllIcons(false)} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                            <div className="w-14 h-14 rounded-[18px] bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 text-2xl transition hover:bg-slate-100">
+                                &times;
+                            </div>
+                            <span className="text-[9.5px] font-bold text-slate-600 text-center">Less</span>
+                        </div>
+                    </>
+                )}
+
+            </div>
         </div>
 
         {/* Notice Board Section */}
-        <div className="pt-4">
-          <div className="flex justify-between items-end mb-4 px-1">
-            <h2 className="text-lg font-bold text-slate-800">Notice Board</h2>
-            <button
-              onClick={() => navigate("/notices")}
-              className="text-[11px] font-bold text-indigo-600 uppercase tracking-wider hover:text-indigo-700 active:scale-95 transition-all"
-            >
-              View All
-            </button>
-          </div>
-          <div>
-            {!notice ? (
-              <div className="bg-white rounded-[24px] p-6 text-center border border-slate-100 shadow-sm">
-                <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mx-auto mb-3">
-                  <FaBell className="text-xl" />
-                </div>
-                <p className="text-sm text-slate-400 font-medium">
-                  No new announcements.
-                </p>
-              </div>
-            ) : (
-              <div
-                onClick={() => navigate("/notices")}
-                className="bg-white p-5 rounded-[24px] flex items-start gap-4 border border-slate-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden group"
-              >
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400"></div>
-                <div className="w-12 h-12 rounded-[16px] bg-amber-50 flex items-center justify-center shrink-0 text-amber-500 shadow-inner group-hover:scale-110 transition-transform">
-                  <FaBullhorn className="text-xl" />
-                </div>
-                <div className="flex-1 pr-2">
-                  <h4 className="font-bold text-slate-800 text-sm mb-1 leading-tight">
-                    {notice.title}
-                  </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 font-medium">
-                    {notice.description}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="px-5 mt-10">
+            <div className="flex justify-between items-end mb-4 px-1">
+                <h2 className="text-base font-bold text-slate-800">Notice Board</h2>
+                <span onClick={() => navigate('/notices')} className="text-[10px] font-bold text-indigo-600 uppercase tracking-wide cursor-pointer hover:underline">View All</span>
+            </div>
+            <div>
+                {!notice ? (
+                    <div className="bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 rounded-[20px] p-5 text-center">
+                        <p className="text-sm text-slate-400 font-medium">No new announcements.</p>
+                    </div>
+                ) : (
+                    <div onClick={() => navigate('/notices')} className="bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 p-4 rounded-[20px] flex items-start gap-4 border-l-4 border-l-amber-400 cursor-pointer">
+                        <div className="w-10 h-10 rounded-[14px] bg-amber-50 flex items-center justify-center shrink-0 text-amber-500">
+                            <FaBullhorn className="text-lg" />
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 text-sm mb-1">{notice.title}</h4>
+                            <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{notice.description}</p>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
-      </div>
 
-      {/* Floating Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 w-full z-50 px-4 pb-4 pt-2 bg-gradient-to-t from-white via-white to-transparent pointer-events-none">
-        <div className="max-w-md mx-auto bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-[28px] flex justify-around items-center p-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)] pointer-events-auto">
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="flex flex-col items-center justify-center w-14 h-14 bg-indigo-50 rounded-2xl text-indigo-600 transition-all shadow-sm"
-          >
-            <FaHome className="text-xl mb-1" />
-            <span className="text-[9px] font-bold tracking-wide">Home</span>
-          </button>
-          <button
-            onClick={() => navigate("/live-classes")}
-            className="flex flex-col items-center justify-center w-14 h-14 text-slate-400 hover:text-indigo-500 transition-colors"
-          >
-            <FaPlay className="text-xl mb-1" />
-            <span className="text-[9px] font-bold tracking-wide">Classes</span>
-          </button>
-          <button
-            onClick={() => navigate("/tests")}
-            className="flex flex-col items-center justify-center w-14 h-14 text-slate-400 hover:text-indigo-500 transition-colors relative"
-          >
-            <FaEdit className="text-xl mb-1" />
-            <span className="text-[9px] font-bold tracking-wide">Tests</span>
-          </button>
-          <button
-            onClick={() => navigate("/notices")}
-            className="flex flex-col items-center justify-center w-14 h-14 text-slate-400 hover:text-indigo-500 transition-colors relative"
-          >
-            <FaBell className="text-xl mb-1" />
-            <span className="text-[9px] font-bold tracking-wide">Notices</span>
-            {notice && (
-              <span className="absolute top-2 right-3 w-2 h-2 bg-rose-500 rounded-full border border-white"></span>
-            )}
-          </button>
-          <button
-            onClick={() => navigate("/profile")}
-            className="flex flex-col items-center justify-center w-14 h-14 text-slate-400 hover:text-indigo-500 transition-colors"
-          >
-            <FaUser className="text-xl mb-1" />
-            <span className="text-[9px] font-bold tracking-wide">Profile</span>
-          </button>
+        {/* Today's Schedule Section */}
+        <div className="px-5 mt-8 mb-6">
+            <h2 className="text-base font-bold text-slate-800 mb-4 px-1">Today's Schedule</h2>
+            <div className="space-y-3">
+                {liveClasses.length === 0 ? (
+                    <div className="bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 rounded-[20px] p-6 text-center">
+                        <p className="text-sm text-slate-400 font-medium">Relax, no classes scheduled for today.</p>
+                    </div>
+                ) : (
+                    liveClasses.map((cls) => (
+                        <div key={cls.id} className="bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 p-4 rounded-[20px] flex items-center gap-4 text-left">
+                            <div className="w-12 h-12 rounded-[14px] bg-red-50 flex items-center justify-center shrink-0 border border-red-100">
+                                <FaVideo className="text-red-500 text-lg" />
+                            </div>
+                            <div className="flex-grow min-w-0">
+                                <h4 className="font-bold text-slate-800 text-sm truncate">{cls.subject || cls.title || 'Live Class'}</h4>
+                                <p className="text-[11px] text-slate-500 font-medium mt-0.5 flex items-center"><FaRegClock className="mr-1"/>Tap to join</p>
+                            </div>
+                            <a href={cls.meetingLink || '#'} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 shadow-md shadow-indigo-600/30 hover:bg-indigo-700 transition">
+                                <FaPlay className="text-white text-xs ml-0.5" />
+                            </a>
+                        </div>
+                    ))
+                )}
+            </div>
         </div>
+
+        {/* Bottom Navigation */}
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-100 flex justify-around items-center pt-3 pb-5 z-50 px-2 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]">
+            <button onClick={() => navigate('/dashboard')} className="flex flex-col items-center gap-1.5 w-16 text-indigo-600 active:scale-95 transition-transform">
+                <FaHome className="text-lg" />
+                <span className="text-[9px] font-bold tracking-wide">Home</span>
+            </button>
+            <button onClick={() => navigate('/live-classes')} className="flex flex-col items-center gap-1.5 w-16 text-slate-400 hover:text-indigo-600 transition active:scale-95">
+                <FaVideo className="text-lg" />
+                <span className="text-[9px] font-bold tracking-wide">Classes</span>
+            </button>
+            <button onClick={() => navigate('/assignments')} className="flex flex-col items-center gap-1.5 w-16 text-slate-400 hover:text-indigo-600 transition active:scale-95">
+                <FaClipboardList className="text-lg" />
+                <span className="text-[9px] font-bold tracking-wide">Tasks</span>
+            </button>
+            <button onClick={() => navigate('/profile')} className="flex flex-col items-center gap-1.5 w-16 text-slate-400 hover:text-indigo-600 transition active:scale-95">
+                <FaUser className="text-lg" />
+                <span className="text-[9px] font-bold tracking-wide">Profile</span>
+            </button>
+            
+            <button onClick={() => navigate('/courses')} className="bg-indigo-50 p-4 rounded-2xl flex flex-col items-center border border-indigo-100 hover:bg-indigo-100 transition shadow-sm active:scale-95">
+                <FaChalkboardTeacher className="text-indigo-600 text-2xl mb-2" />
+                <span className="text-xs font-bold text-gray-700">Lectures</span>
+            </button>
+        </div>
+
       </div>
     </div>
   );

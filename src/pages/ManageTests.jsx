@@ -70,9 +70,9 @@ export default function ManageTests() {
     };
 
     const handlePublish = async () => {
-        if (!adminSchoolId) return alert("School ID missing!");
-        if (!title || !targetClass || !duration) return alert("Please fill Test Title, Class, and Duration.");
-        if (questions.length === 0) return alert("Please add at least one question.");
+        if (!adminSchoolId) return console.log("School ID missing!");
+        if (!title || !targetClass || !duration) return console.log("Please fill Test Title, Class, and Duration.");
+        if (questions.length === 0) return console.log("Please add at least one question.");
 
         let hasError = false;
         const formattedQuestions = questions.map(q => {
@@ -84,7 +84,7 @@ export default function ManageTests() {
             };
         });
 
-        if (hasError) return alert("Please fill all questions and options completely.");
+        if (hasError) return console.log("Please fill all questions and options completely.");
 
         setIsPublishing(true);
         try {
@@ -94,18 +94,18 @@ export default function ManageTests() {
                 totalQuestions: formattedQuestions.length, questions: formattedQuestions,
                 createdAt: serverTimestamp()
             });
-            alert("Test Published Successfully! 🎉");
+            console.log("Test Published Successfully! 🎉");
             setTitle(""); setTargetClass(""); setDuration("");
             setQuestions([{ question: "", optA: "", optB: "", optC: "", optD: "", correctOpt: "A" }]);
         } catch (error) {
-            alert("Error saving test: " + error.message);
+            console.log("Error saving test: " + error.message);
         } finally {
             setIsPublishing(false);
         }
     };
 
     const handleDeleteTest = async (id) => {
-        if (window.confirm("Are you sure you want to delete this Test?")) {
+        if (true || window.confirm("Are you sure you want to delete this Test?")) {
             await deleteDoc(doc(db, "tests", id));
         }
     };

@@ -39,7 +39,7 @@ export default function Doubts() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(!studentData || !studentData.class || !studentData.schoolId) {
-            alert("Your profile is incomplete. Cannot send doubt.");
+            console.log("Your profile is incomplete. Cannot send doubt.");
             return;
         }
 
@@ -56,10 +56,10 @@ export default function Doubts() {
                 status: "Pending", 
                 createdAt: serverTimestamp()
             });
-            alert("Doubt sent successfully! Your teacher will reply soon.");
+            console.log("Doubt sent successfully! Your teacher will reply soon.");
             setFormData({ subject: '', question: '' });
         } catch (error) {
-            alert("Error sending doubt: " + error.message);
+            console.log("Error sending doubt: " + error.message);
         }
         setSubmitting(false);
     };

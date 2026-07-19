@@ -69,11 +69,11 @@ export default function AddResults() {
         : [];
 
     const handleSave = async () => {
-        if (!selectedTest) return alert("Please select a test.");
-        if (!selectedStudentId) return alert("Please select a student.");
+        if (!selectedTest) return console.log("Please select a test.");
+        if (!selectedStudentId) return console.log("Please select a student.");
         const m = parseInt(marks);
-        if (isNaN(m) || m < 0) return alert("Please enter valid marks.");
-        if (m > selectedTest.totalQuestions) return alert(`Marks cannot exceed ${selectedTest.totalQuestions}.`);
+        if (isNaN(m) || m < 0) return console.log("Please enter valid marks.");
+        if (m > selectedTest.totalQuestions) return console.log(`Marks cannot exceed ${selectedTest.totalQuestions}.`);
 
         const student = students.find(s => s.id === selectedStudentId);
         const studentName = student ? (student.name || student.firstName || 'Unnamed Student') : 'Unnamed Student';
@@ -91,12 +91,12 @@ export default function AddResults() {
                 manualEntry: true,
                 timestamp: serverTimestamp()
             });
-            alert("Result saved successfully!");
+            console.log("Result saved successfully!");
             setMarks("");
             setSelectedStudentId("");
         } catch (error) {
             console.error("Error saving result:", error);
-            alert("Error saving result: " + error.message);
+            console.log("Error saving result: " + error.message);
         } finally {
             setLoading(false);
         }

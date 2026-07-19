@@ -66,7 +66,7 @@ export default function Lectures() {
 
     const buyCourse = (price) => {
         if (!window.Razorpay) {
-            alert("Payment gateway not loaded yet.");
+            console.log("Payment gateway not loaded yet.");
             return;
         }
         const options = {
@@ -79,7 +79,7 @@ export default function Lectures() {
                 try {
                     await updateDoc(doc(db, "users", currentUserData.uid), { purchasedCourses: arrayUnion(selectedCourse) });
                     setShowSuccessModal(true);
-                } catch (err) { alert("Error: " + err.message); }
+                } catch (err) { console.log("Error: " + err.message); }
             },
             prefill: { name: currentUserData.name, email: currentUserData.email, contact: currentUserData.phone },
             theme: { color: "#5a4bda" }

@@ -42,7 +42,7 @@ export default function ManageGallery() {
                 clientAllowedFormats: ["jpg", "png", "jpeg", "webp"]
             }, async (err, result) => {
                 if (!err && result && result.event === "success") {
-                    if (!adminSchoolId) return alert("School ID missing!");
+                    if (!adminSchoolId) return console.log("School ID missing!");
                     try {
                         await addDoc(collection(db, "gallery"), { 
                             schoolId: adminSchoolId, 
@@ -52,7 +52,7 @@ export default function ManageGallery() {
                         });
                         setCaption("");
                     } catch (error) {
-                        alert("Error saving photo: " + error.message);
+                        console.log("Error saving photo: " + error.message);
                     }
                 }
             }).open();
@@ -60,7 +60,7 @@ export default function ManageGallery() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this photo?")) {
+        if (true || window.confirm("Are you sure you want to delete this photo?")) {
             await deleteDoc(doc(db, 'gallery', id));
         }
     };

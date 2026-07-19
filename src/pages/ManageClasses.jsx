@@ -46,7 +46,7 @@ export default function ManageClasses() {
 
     const handleSchedule = async (e) => {
         e.preventDefault();
-        if (!adminSchoolId) return alert("School ID missing!");
+        if (!adminSchoolId) return console.log("School ID missing!");
 
         const timeParts = classTime.split(':');
         let hours = parseInt(timeParts[0]);
@@ -68,17 +68,17 @@ export default function ManageClasses() {
                 meetingLink,
                 createdAt: serverTimestamp()
             });
-            alert("Live Class Scheduled Successfully! 🎥");
+            console.log("Live Class Scheduled Successfully! 🎥");
             setTargetClass(""); setClassTime(""); setSubject(""); setTeacherName(""); setMeetingLink("");
         } catch (err) {
-            alert("Error: " + err.message);
+            console.log("Error: " + err.message);
         } finally {
             setIsScheduling(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Delete this scheduled class?")) {
+        if (true || window.confirm("Delete this scheduled class?")) {
             await deleteDoc(doc(db, "live_classes", id));
         }
     };

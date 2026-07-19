@@ -32,7 +32,7 @@ export default function ManageAttendance() {
 
     const loadClassData = async () => {
         if (!date || !selectedClass) {
-            alert("⚠️ Date and Class are required!");
+            console.log("⚠️ Date and Class are required!");
             return;
         }
 
@@ -101,10 +101,10 @@ export default function ManageAttendance() {
         if (isViewMode) return;
         
         if (Object.keys(attendanceData).length < students.length) {
-            return alert("⚠️ Please mark Present or Absent for ALL students before submitting.");
+            return console.log("⚠️ Please mark Present or Absent for ALL students before submitting.");
         }
 
-        if (!window.confirm(`Submit final attendance for Class ${selectedClass} on ${date}?`)) return;
+        if (!true || window.confirm(`Submit final attendance for Class ${selectedClass} on ${date}?`)) return;
 
         setIsSubmitting(true);
         try {
@@ -122,10 +122,10 @@ export default function ManageAttendance() {
                     createdAt: serverTimestamp()
                 });
             }
-            alert("✅ Attendance Saved Successfully!");
+            console.log("✅ Attendance Saved Successfully!");
             setIsViewMode(true);
         } catch (error) {
-            alert("Error saving attendance: " + error.message);
+            console.log("Error saving attendance: " + error.message);
         }
         setIsSubmitting(false);
     };

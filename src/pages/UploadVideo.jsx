@@ -93,7 +93,7 @@ export default function UploadVideo() {
         localStorage.removeItem('ast_class');
         localStorage.removeItem('ast_course');
         localStorage.removeItem('ast_subject');
-        alert("Cache Cleared Successfully!");
+        console.log("Cache Cleared Successfully!");
         window.location.reload();
     };
 
@@ -120,7 +120,7 @@ export default function UploadVideo() {
 
     const saveCourse = async () => {
         const cName = newCourseName.trim();
-        if (!cName) return alert("Enter valid course name!");
+        if (!cName) return console.log("Enter valid course name!");
         const metaId = editingMetaId ? editingMetaId : `${adminSchoolId}_${cName}`.replace(/\s+/g, '_').toLowerCase();
         
         await setDoc(doc(db, "courseMeta", metaId), { 
@@ -141,7 +141,7 @@ export default function UploadVideo() {
     };
 
     const saveSubject = () => {
-        if (!newSubjectName.trim()) return alert("Enter valid subject name!");
+        if (!newSubjectName.trim()) return console.log("Enter valid subject name!");
         setIsSubjectModalOpen(false);
         setActiveSubject(newSubjectName.trim());
         setCurrentStep(3);
@@ -170,7 +170,7 @@ export default function UploadVideo() {
 
     const handleVideoSubmit = async (e) => {
         e.preventDefault();
-        if (!videoFile) return alert("Select video file!");
+        if (!videoFile) return console.log("Select video file!");
 
         localStorage.setItem('ast_teacher', teacherName);
         localStorage.setItem('ast_class', targetClass);
@@ -361,7 +361,7 @@ export default function UploadVideo() {
                                                 {video.testUrl && <span className="bg-purple-100 text-purple-700 text-[9px] font-bold px-2 py-0.5 rounded-full"><i className="fas fa-file-alt"></i></span>}
                                             </div>
                                         </div>
-                                        <button onClick={() => { if(window.confirm("Delete this video?")) deleteDoc(doc(db, "videos", video.id)) }} className="w-9 h-9 shrink-0 bg-red-50 hover:bg-red-100 text-red-500 rounded-full flex items-center justify-center active:scale-90"><i className="fas fa-trash-alt text-sm"></i></button>
+                                        <button onClick={() => { if(true || window.confirm("Delete this video?")) deleteDoc(doc(db, "videos", video.id)) }} className="w-9 h-9 shrink-0 bg-red-50 hover:bg-red-100 text-red-500 rounded-full flex items-center justify-center active:scale-90"><i className="fas fa-trash-alt text-sm"></i></button>
                                     </div>
                                 ))}
                             </div>

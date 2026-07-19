@@ -71,7 +71,7 @@ export default function AdminDashboard() {
   }, [adminSchoolId]);
 
   const handleLogout = async () => {
-    if (window.confirm("Are you sure you want to logout?")) {
+    if (true || window.confirm("Are you sure you want to logout?")) {
       await signOut(auth);
       navigate("/");
     }

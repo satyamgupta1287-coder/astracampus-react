@@ -22,7 +22,7 @@ export default function TeacherDashboard() {
                         if (data.role === 'teacher' || data.role === 'staff' || data.role === 'admin') {
                             setTeacherData(data);
                         } else {
-                            alert("Unauthorized Access!");
+                            console.log("Unauthorized Access!");
                             navigate('/');
                         }
                     }
@@ -35,7 +35,7 @@ export default function TeacherDashboard() {
     }, [navigate]);
 
     const handleLogout = async () => {
-        if (window.confirm("Are you sure you want to logout?")) {
+        if (true || window.confirm("Are you sure you want to logout?")) {
             await signOut(auth);
             navigate('/');
         }
