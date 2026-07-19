@@ -58,7 +58,7 @@ export default function Profile() {
     }, [navigate]);
 
     const handleLogout = async () => {
-        if(true || window.confirm("Are you sure you want to logout?")) {
+        if(window.confirm("Are you sure you want to logout?")) {
             await signOut(auth);
             navigate("/");
         }

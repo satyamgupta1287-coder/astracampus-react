@@ -155,7 +155,7 @@ export default function ManageStaff() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Delete this staff member permanently?")) {
+        if (window.confirm("Delete this staff member permanently?")) {
             await deleteDoc(doc(db, "users", id));
             console.log("Deleted!");
             loadStaff();

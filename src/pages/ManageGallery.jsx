@@ -60,7 +60,7 @@ export default function ManageGallery() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Are you sure you want to delete this photo?")) {
+        if (window.confirm("Are you sure you want to delete this photo?")) {
             await deleteDoc(doc(db, 'gallery', id));
         }
     };

@@ -35,7 +35,7 @@ export default function ManageLeaves() {
     }, [adminSchoolId]);
 
     const updateStatus = async (id, newStatus) => {
-        if (true || window.confirm(`Mark this leave as ${newStatus}?`)) {
+        if (window.confirm(`Mark this leave as ${newStatus}?`)) {
             await updateDoc(doc(db, "leaves", id), { status: newStatus });
         }
     };

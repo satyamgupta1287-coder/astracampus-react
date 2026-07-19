@@ -35,7 +35,7 @@ export default function ManageComplaints() {
     }, [adminSchoolId]);
 
     const resolveComplaint = async (id) => {
-        if (true || window.confirm("Are you sure you want to mark this issue as resolved?")) {
+        if (window.confirm("Are you sure you want to mark this issue as resolved?")) {
             try {
                 await updateDoc(doc(db, "complaints", id), { status: 'Resolved' });
             } catch (error) {

@@ -105,7 +105,7 @@ export default function ManageTests() {
     };
 
     const handleDeleteTest = async (id) => {
-        if (true || window.confirm("Are you sure you want to delete this Test?")) {
+        if (window.confirm("Are you sure you want to delete this Test?")) {
             await deleteDoc(doc(db, "tests", id));
         }
     };

@@ -419,25 +419,7 @@ export default function ManageFees() {
                             <h1 className="text-xl font-bold text-slate-800">Fees & Billing ERP</h1>
                         </div>
                         <div className="flex items-center gap-4">
-                            <button type="button" onClick={async () => {
-                                // Removed window.confirm due to iframe restrictions
-                                const batch = [];
-                                receipts.forEach(r => {
-                                    batch.push(deleteDoc(doc(db, "receipts", r.id)));
-                                });
-                                students.forEach(s => {
-                                    batch.push(updateDoc(doc(db, "users", s.id), { paidFee: 0, totalFee: 0 }));
-                                });
-                                try {
-                                    await Promise.all(batch);
-                                    console.log("All fee data has been wiped clean!");
-                                } catch(e) {
-                                    console.error(e);
-                                    console.error("Error wiping data");
-                                }
-                            }} className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm flex items-center gap-2 transition">
-                                <i className="fas fa-trash-alt"></i> Reset All Fees Data
-                            </button>
+                            
                             <div className="flex bg-slate-100 p-1 rounded-xl">
                             {['dashboard', 'collect', 'structures', 'receipts'].map(tab => (
                                 <button 
@@ -664,25 +646,7 @@ export default function ManageFees() {
                                     <div className="p-6">
                                         <div className="flex items-center justify-between mb-4 border-b pb-2">
                                             <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider"><i className="fas fa-rupee-sign text-indigo-500 mr-2"></i>Process Payment</h3>
-                                            <button type="button" onClick={async () => {
-                                                if(!true) return;
-                                                const batch = [];
-                                                receipts.forEach(r => {
-                                                    batch.push(deleteDoc(doc(db, "receipts", r.id)));
-                                                });
-                                                students.forEach(s => {
-                                                    batch.push(updateDoc(doc(db, "users", s.id), { paidFee: 0, totalFee: 0 }));
-                                                });
-                                                try {
-                                                    await Promise.all(batch);
-                                                    console.log("All fee data has been wiped clean!");
-                                                } catch(e) {
-                                                    console.error(e);
-                                                    console.log("Error wiping data");
-                                                }
-                                            }} className="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded font-bold hover:bg-red-200">
-                                                Wipe Old Data
-                                            </button>
+                                            
                                         </div>
                                         
                                         {currentStructure && (

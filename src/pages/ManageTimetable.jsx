@@ -64,7 +64,7 @@ export default function ManageTimetable() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Delete this period?")) {
+        if (window.confirm("Delete this period?")) {
             await deleteDoc(doc(db, "timetable", id));
         }
     };

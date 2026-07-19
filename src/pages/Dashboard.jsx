@@ -88,7 +88,7 @@ export default function Dashboard() {
             // Fees
             const totalFee = data.totalFee || 0;
             const paidFee = data.paidFee || 0;
-            const pendingFee = totalFee - paidFee;
+            const pendingFee = Math.max(0, totalFee - paidFee);
             setStats((prev) => ({ ...prev, fees: `₹${pendingFee}` }));
 
             if (schoolId && targetClassStr) {
@@ -169,7 +169,7 @@ export default function Dashboard() {
   }, [navigate]);
 
   const handleLogout = async () => {
-    if(true || window.confirm("Are you sure you want to log out?")) {
+    if(window.confirm("Are you sure you want to log out?")) {
       try {
         await signOut(auth);
         navigate("/");

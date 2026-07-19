@@ -361,7 +361,7 @@ export default function UploadVideo() {
                                                 {video.testUrl && <span className="bg-purple-100 text-purple-700 text-[9px] font-bold px-2 py-0.5 rounded-full"><i className="fas fa-file-alt"></i></span>}
                                             </div>
                                         </div>
-                                        <button onClick={() => { if(true || window.confirm("Delete this video?")) deleteDoc(doc(db, "videos", video.id)) }} className="w-9 h-9 shrink-0 bg-red-50 hover:bg-red-100 text-red-500 rounded-full flex items-center justify-center active:scale-90"><i className="fas fa-trash-alt text-sm"></i></button>
+                                        <button onClick={() => { if(window.confirm("Delete this video?")) deleteDoc(doc(db, "videos", video.id)) }} className="w-9 h-9 shrink-0 bg-red-50 hover:bg-red-100 text-red-500 rounded-full flex items-center justify-center active:scale-90"><i className="fas fa-trash-alt text-sm"></i></button>
                                     </div>
                                 ))}
                             </div>

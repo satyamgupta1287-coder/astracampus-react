@@ -166,7 +166,7 @@ export default function ManageStudents() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Are you absolutely sure you want to delete this record?")) {
+        if (window.confirm("Are you absolutely sure you want to delete this record?")) {
             await deleteDoc(doc(db, "users", id));
             console.log("Deleted successfully!");
             loadStudents();

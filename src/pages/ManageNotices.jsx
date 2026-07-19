@@ -63,7 +63,7 @@ export default function ManageNotices() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Are you sure you want to delete this notice?")) {
+        if (window.confirm("Are you sure you want to delete this notice?")) {
             await deleteDoc(doc(db, "announcements", id));
         }
     };

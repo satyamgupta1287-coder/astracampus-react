@@ -78,7 +78,7 @@ export default function ManageClasses() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Delete this scheduled class?")) {
+        if (window.confirm("Delete this scheduled class?")) {
             await deleteDoc(doc(db, "live_classes", id));
         }
     };

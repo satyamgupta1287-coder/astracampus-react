@@ -64,7 +64,7 @@ export default function ManageDoubts() {
     };
 
     const handleDelete = async (id) => {
-        if (true || window.confirm("Are you sure you want to delete this doubt?")) {
+        if (window.confirm("Are you sure you want to delete this doubt?")) {
             await deleteDoc(doc(db, "doubts", id));
         }
     };

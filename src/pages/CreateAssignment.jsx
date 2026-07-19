@@ -112,7 +112,7 @@ export default function CreateAssignment() {
     };
 
     const handleDeleteAssignment = async (assignId) => {
-        if (true || window.confirm("Are you sure you want to delete this assignment?")) {
+        if (window.confirm("Are you sure you want to delete this assignment?")) {
             await deleteDoc(doc(db, "assignments", assignId));
         }
     };
