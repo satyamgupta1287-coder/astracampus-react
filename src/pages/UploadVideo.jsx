@@ -200,6 +200,17 @@ export default function UploadVideo() {
                 testUrl: testUrl || "",   
                 createdAt: serverTimestamp()
             });
+            
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: targetClass,
+                    title: "New Video Lecture",
+                    message: `New lecture added: ${title || "Untitled"} for ${activeSubject}`,
+                    type: "video",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
 
             setTitle('');
             if (fileInputRef.current) fileInputRef.current.value = '';

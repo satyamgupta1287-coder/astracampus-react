@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase-init';
-import { collection, query, where, onSnapshot, getDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, getDoc, doc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function ManageLeaves() {
     const navigate = useNavigate();
@@ -37,6 +37,19 @@ export default function ManageLeaves() {
     const updateStatus = async (id, newStatus) => {
         if (window.confirm(`Mark this leave as ${newStatus}?`)) {
             await updateDoc(doc(db, "leaves", id), { status: newStatus });
+            try {
+                const leave = leaves.find(l => l.id === id);
+                if (leave) {
+                    await addDoc(collection(db, "notifications"), {
+                        schoolId: adminSchoolId,
+                        userId: leave.studentId,
+                        title: `Leave Request ${newStatus}`,
+                        message: `Your leave request for ${leave.fromDate} was ${newStatus}.`,
+                        type: "leave_reply",
+                        createdAt: serverTimestamp()
+                    });
+                }
+            } catch (err) { console.error(err); }
         }
     };
 

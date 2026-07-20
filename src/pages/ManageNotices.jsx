@@ -51,6 +51,16 @@ export default function ManageNotices() {
                 description,
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: targetClass,
+                    title: "New Notice",
+                    message: title,
+                    type: "notice",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             console.log("Announcement Posted Successfully! 📢");
             setTitle("");
             setTargetClass("All");

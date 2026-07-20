@@ -91,6 +91,20 @@ export default function CreateAssignment() {
                 fileUrl: uploadedFileUrl || "",
                 createdAt: serverTimestamp()
             });
+            
+            // Add notification for the class
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: targetClass,
+                    title: "New Assignment",
+                    message: `New assignment added: ${title.trim()}`,
+                    type: "assignment",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) {
+                console.error("Error creating notification:", err);
+            }
             console.log("🎉 Assignment Published!");
             setTitle(""); setTargetClass(""); setDescription(""); setUploadedFileUrl(""); setFileName("");
         } catch (e) {
@@ -105,6 +119,19 @@ export default function CreateAssignment() {
         if (!marksValue || !marksValue.trim()) return window.alert("Enter marks first!");
         try {
             await updateDoc(doc(db, "submissions", submissionId), { marks: marksValue.trim() });
+            try {
+                const sub = allSubmissions.find(s => s.id === submissionId);
+                if (sub) {
+                    await addDoc(collection(db, "notifications"), {
+                        schoolId: adminSchoolId,
+                        userId: sub.studentId,
+                        title: "Assignment Graded",
+                        message: `You received ${marksValue.trim()} for your assignment.`,
+                        type: "assignment_grade",
+                        createdAt: serverTimestamp()
+                    });
+                }
+            } catch (err) { console.error(err); }
             console.log("🎯 Marks saved successfully!");
         } catch (e) {
             console.log("Error updating marks: " + e.message);

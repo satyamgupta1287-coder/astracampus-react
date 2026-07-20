@@ -101,6 +101,20 @@ export default function Tests() {
                 totalQuestions: total,
                 timestamp: serverTimestamp()
             });
+
+            // Add notification for teachers
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: studentData.schoolId,
+                    targetRole: "admin", // or whatever we use to identify teachers/admins
+                    title: "Test Submitted",
+                    message: `${studentData.name || studentData.firstName} submitted test: ${currentActiveTest.title}`,
+                    type: "test_submission",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) {
+                console.error("Error creating notification:", err);
+            }
             const percentage = Math.round((score / total) * 100);
             setScoreInfo({ score, total, percentage });
             setView('result');

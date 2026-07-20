@@ -94,6 +94,16 @@ export default function ManageTests() {
                 totalQuestions: formattedQuestions.length, questions: formattedQuestions,
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: targetClass,
+                    title: "New Test Available",
+                    message: `${title} added for ${duration} mins`,
+                    type: "test",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             console.log("Test Published Successfully! 🎉");
             setTitle(""); setTargetClass(""); setDuration("");
             setQuestions([{ question: "", optA: "", optB: "", optC: "", optD: "", correctOpt: "A" }]);

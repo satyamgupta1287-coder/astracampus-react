@@ -54,6 +54,16 @@ export default function ManageTimetable() {
                 teacher: teacher.trim(),
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: targetClass.trim(),
+                    title: "Timetable Updated",
+                    message: `New class added on ${day} at ${time.trim()}`,
+                    type: "timetable",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             setTargetClass(""); setSubject(""); setTime(""); setTeacher("");
             console.log("Period added successfully!");
         } catch (error) {

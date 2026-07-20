@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase-init';
-import { collection, query, where, onSnapshot, getDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, getDoc, doc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function ManageComplaints() {
     const navigate = useNavigate();
@@ -38,6 +38,19 @@ export default function ManageComplaints() {
         if (window.confirm("Are you sure you want to mark this issue as resolved?")) {
             try {
                 await updateDoc(doc(db, "complaints", id), { status: 'Resolved' });
+                try {
+                    const comp = complaints.find(c => c.id === id);
+                    if (comp) {
+                        await addDoc(collection(db, "notifications"), {
+                            schoolId: adminSchoolId,
+                            userId: comp.studentId,
+                            title: "Complaint Resolved",
+                            message: `Your complaint "${comp.title}" has been marked as resolved.`,
+                            type: "complaint_reply",
+                            createdAt: serverTimestamp()
+                        });
+                    }
+                } catch (err) { console.error(err); }
             } catch (error) {
                 console.log("Error updating status: " + error.message);
             }

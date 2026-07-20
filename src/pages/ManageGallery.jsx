@@ -48,8 +48,17 @@ export default function ManageGallery() {
                             schoolId: adminSchoolId, 
                             caption: caption || "School Memory", 
                             imageUrl: result.info.secure_url, 
-                            createdAt: serverTimestamp() 
+                            createdAt: serverTimestamp()
                         });
+                        try {
+                            await addDoc(collection(db, "notifications"), {
+                                schoolId: adminSchoolId,
+                                title: "New Gallery Photo",
+                                message: caption || "New photo added",
+                                type: "gallery",
+                                createdAt: serverTimestamp()
+                            });
+                        } catch (err) { console.error(err); }
                         setCaption("");
                     } catch (error) {
                         console.log("Error saving photo: " + error.message);

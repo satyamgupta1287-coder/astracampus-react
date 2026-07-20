@@ -366,6 +366,21 @@ export default function ManageFees() {
             await updateDoc(userRef, {
                 paidFee: currentPaid + computedAmount
             });
+            
+            // Add notification
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    userId: selectedStudent.id,
+                    title: "Fee Payment Received",
+                    message: `A payment of ₹${computedAmount} has been recorded for your account.`,
+                    type: "fee",
+                    read: false,
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) {
+                console.error("Error creating notification:", err);
+            }
 
             console.log(`Fee Collected! Receipt No: ${receiptNo}`);
             setPaymentForm({ amount: "", discount: 0, fine: 0, paymentMode: "Cash", transactionId: "", remarks: "" });

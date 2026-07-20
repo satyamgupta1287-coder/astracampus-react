@@ -91,6 +91,16 @@ export default function AddResults() {
                 manualEntry: true,
                 timestamp: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    userId: selectedStudentId,
+                    title: "Result Declared",
+                    message: `Result declared for ${selectedTest.title}. You scored ${m}`,
+                    type: "result",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             console.log("Result saved successfully!");
             setMarks("");
             setSelectedStudentId("");

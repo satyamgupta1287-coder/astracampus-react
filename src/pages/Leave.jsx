@@ -54,6 +54,16 @@ export default function Leave() {
                 status: "Pending",
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: currentUserData.schoolId,
+                    targetRole: "admin",
+                    title: "New Leave Request",
+                    message: `${currentUserData.name || currentUserData.firstName} requested leave from ${formData.fromDate} to ${formData.toDate}`,
+                    type: "leave",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             setFormData({ fromDate: '', toDate: '', reason: '' });
             showMessage("✅ Leave applied successfully!", "text-emerald-600");
         } catch(err) {

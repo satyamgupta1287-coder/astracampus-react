@@ -56,6 +56,16 @@ export default function Doubts() {
                 status: "Pending", 
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: studentData.schoolId,
+                    targetRole: "admin",
+                    title: "New Doubt Submitted",
+                    message: `${formData.subject}: ${formData.question}`,
+                    type: "doubt",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             console.log("Doubt sent successfully! Your teacher will reply soon.");
             setFormData({ subject: '', question: '' });
         } catch (error) {

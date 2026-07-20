@@ -80,6 +80,16 @@ export default function Assignments() {
                         marks: "Pending",
                         submittedAt: serverTimestamp()
                     });
+                    try {
+                        await addDoc(collection(db, "notifications"), {
+                            schoolId: currentUserData.schoolId,
+                            targetRole: "admin",
+                            title: "Assignment Submitted",
+                            message: `${currentUserData.name || currentUserData.firstName || "A student"} submitted an assignment`,
+                            type: "submission",
+                            createdAt: serverTimestamp()
+                        });
+                    } catch (err) { console.error(err); }
                     setUploadAlert(true);
                     setTimeout(() => setUploadAlert(false), 4000);
                 } catch (error) {

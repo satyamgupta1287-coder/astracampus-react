@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase-init';
-import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, where, getDoc } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, addDoc, serverTimestamp, where, getDoc } from 'firebase/firestore';
 
 export default function ManageDoubts() {
     const navigate = useNavigate();
@@ -55,6 +55,16 @@ export default function ManageDoubts() {
                 reply: replyText,
                 status: "Resolved"
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    userId: modalData.studentId,
+                    title: "Doubt Resolved",
+                    message: `Your doubt in ${modalData.subject} has been answered.`,
+                    type: "doubt_reply",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             setModalData(null);
         } catch (error) {
             console.log("Error sending reply: " + error.message);

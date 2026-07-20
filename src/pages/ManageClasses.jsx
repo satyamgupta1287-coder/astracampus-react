@@ -68,6 +68,17 @@ export default function ManageClasses() {
                 meetingLink,
                 createdAt: serverTimestamp()
             });
+            
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: targetClass,
+                    title: "Live Class Scheduled",
+                    message: `${subject} by ${teacherName} at ${formattedTime}`,
+                    type: "live_class",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             console.log("Live Class Scheduled Successfully! 🎥");
             setTargetClass(""); setClassTime(""); setSubject(""); setTeacherName(""); setMeetingLink("");
         } catch (err) {

@@ -35,6 +35,16 @@ export default function Feedback() {
                 message: formData.message,
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: currentUserData.schoolId,
+                    targetRole: "admin",
+                    title: "New Feedback Received",
+                    message: `${currentUserData.name || currentUserData.firstName} submitted feedback: ${formData.category}`,
+                    type: "feedback",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             setFormData({ category: 'Suggestion', message: '' });
             setMsg({ text: "🎉 Thank you! Your feedback has been recorded.", type: "text-emerald-600" });
         } catch(err) {

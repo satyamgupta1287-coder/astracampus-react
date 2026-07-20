@@ -52,6 +52,16 @@ export default function ManageMaterials() {
                             fileUrl: result.info.secure_url,
                             createdAt: serverTimestamp()
                         });
+                        try {
+                            await addDoc(collection(db, "notifications"), {
+                                schoolId: adminSchoolId,
+                                targetClass: className,
+                                title: "New Study Material",
+                                message: `${title || 'Untitled'} added for ${subject || 'General'}`,
+                                type: "material",
+                                createdAt: serverTimestamp()
+                            });
+                        } catch (err) { console.error(err); }
                         console.log("File uploaded successfully! ✅");
                         setTitle("");
                         setSubject("");

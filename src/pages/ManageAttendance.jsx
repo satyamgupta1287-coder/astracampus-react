@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase-init';
-import { collection, onSnapshot, query, where, doc, setDoc, getDoc, getDocs, serverTimestamp } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, doc, setDoc, getDoc, addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 
 export default function ManageAttendance() {
     const navigate = useNavigate();
@@ -122,6 +122,16 @@ export default function ManageAttendance() {
                     createdAt: serverTimestamp()
                 });
             }
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: adminSchoolId,
+                    targetClass: selectedClass,
+                    title: "Attendance Marked",
+                    message: `Attendance marked for class ${selectedClass} on ${date}`,
+                    type: "attendance",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             window.alert("✅ Attendance Saved Successfully!");
             setIsViewMode(true);
         } catch (error) {

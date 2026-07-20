@@ -10,6 +10,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import NotificationBell from "../components/NotificationBell";
 import {
   FaPowerOff,
   FaVideo,
@@ -194,6 +195,7 @@ export default function Dashboard() {
                 <h1 className="text-2xl font-bold text-slate-900 tracking-tight truncate w-48">{userData.name}</h1>
             </div>
             <div className="flex items-center gap-3">
+                <NotificationBell />
                 <div className="w-11 h-11 rounded-full overflow-hidden bg-slate-200 shadow-sm shrink-0 border border-slate-200">
                     <img src={userData.photoUrl} className="w-full h-full object-cover" alt="Profile" />
                 </div>

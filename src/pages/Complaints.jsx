@@ -40,6 +40,16 @@ export default function Complaints() {
                 status: "pending",
                 createdAt: serverTimestamp()
             });
+            try {
+                await addDoc(collection(db, "notifications"), {
+                    schoolId: studentData.schoolId,
+                    targetRole: "admin",
+                    title: "New Complaint Submitted",
+                    message: formData.title,
+                    type: "complaint",
+                    createdAt: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
             window.alert("Complaint Submitted Successfully! Admin will check it soon.");
             navigate('/dashboard');
         } catch(e) {
