@@ -14,7 +14,8 @@ export const requestNotificationPermission = async (userId) => {
             
             if (!vapidKey) {
                 console.warn("VITE_FIREBASE_VAPID_KEY is missing. Add your web push certificate key to .env");
-                return null;
+                // We don't return here so at least browser permission is requested
+                return 'browser_permission_granted_no_token';
             }
 
             if (messaging) {

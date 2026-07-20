@@ -104,7 +104,7 @@ export default function ManageAttendance() {
             return window.alert("⚠️ Please mark Present or Absent for ALL students before submitting.");
         }
 
-        if (!true || window.confirm(`Submit final attendance for Class ${selectedClass} on ${date}?`)) return;
+        if (!window.confirm(`Submit final attendance for Class ${selectedClass} on ${date}?`)) return;
 
         setIsSubmitting(true);
         try {

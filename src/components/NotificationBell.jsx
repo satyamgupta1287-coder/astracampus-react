@@ -38,7 +38,7 @@ export default function NotificationBell() {
                 
                 const userData = userDoc.data();
                 const schoolId = userData.schoolId;
-                const role = userData.role;
+                const role = (userData.role || "student").toLowerCase().trim();
                 const targetClass = String(userData.class || "");
                 
                 if (!schoolId) return;
@@ -58,7 +58,7 @@ export default function NotificationBell() {
                         // Filter logic based on user role/target
                         let isRelevant = false;
                         if (data.userId === user.uid) isRelevant = true;
-                        else if (data.targetClass === targetClass && role === 'student') isRelevant = true;
+                        else if ((data.targetClass === targetClass || data.targetClass === "All") && role === 'student') isRelevant = true;
                         else if (data.targetRole === 'admin' && (role === 'admin' || role === 'teacher')) isRelevant = true;
                         else if (!data.userId && !data.targetClass && !data.targetRole) isRelevant = true; // global broadcast
                         
