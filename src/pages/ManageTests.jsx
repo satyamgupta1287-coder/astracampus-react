@@ -138,7 +138,7 @@ export default function ManageTests() {
                             <label className="block text-sm font-bold text-gray-700 mb-1">Test Title *</label>
                             <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g., Weekly Math Test - 1" className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-purple-500" />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             <div>
                                 <label className="block text-sm font-bold text-gray-700 mb-1">Target Class *</label>
                                 <select value={targetClass} onChange={e => setTargetClass(e.target.value)} className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-purple-500">
@@ -166,7 +166,7 @@ export default function ManageTests() {
                                 
                                 <textarea value={q.question} onChange={e => handleQuestionChange(index, 'question', e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg outline-none mb-3 text-sm focus:ring-2 focus:ring-purple-400" placeholder="Type your question here..."></textarea>
                                 
-                                <div className="grid grid-cols-2 gap-2 mb-3">
+                                <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 mb-3">
                                     <input type="text" value={q.optA} onChange={e => handleQuestionChange(index, 'optA', e.target.value)} className="p-2 border border-gray-200 rounded-lg text-sm outline-none" placeholder="Option A" />
                                     <input type="text" value={q.optB} onChange={e => handleQuestionChange(index, 'optB', e.target.value)} className="p-2 border border-gray-200 rounded-lg text-sm outline-none" placeholder="Option B" />
                                     <input type="text" value={q.optC} onChange={e => handleQuestionChange(index, 'optC', e.target.value)} className="p-2 border border-gray-200 rounded-lg text-sm outline-none" placeholder="Option C" />

@@ -104,7 +104,7 @@ export default function Lectures() {
                 </h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <h3 className="font-bold text-slate-800 mb-4 text-sm px-1 flex items-center gap-2">
                     <i className="fas fa-list text-slate-400"></i> Course Content
                 </h3>
@@ -175,7 +175,7 @@ export default function Lectures() {
 
             {showVideoModal && (
                 <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center px-4">
-                    <div className="w-full max-w-md bg-slate-900 rounded-[20px] overflow-hidden shadow-2xl">
+                    <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl w-full bg-slate-900 rounded-[20px] overflow-hidden shadow-2xl">
                         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
                             <h3 className="text-white font-bold text-sm truncate pr-3">{videoInfo.title}</h3>
                             <button onClick={() => setShowVideoModal(false)} className="w-9 h-9 shrink-0 bg-white/10 hover:bg-white/20 rounded-full text-white flex justify-center items-center active:scale-90"><i className="fas fa-times"></i></button>

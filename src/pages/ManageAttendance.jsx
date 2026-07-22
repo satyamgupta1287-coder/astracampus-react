@@ -145,7 +145,7 @@ export default function ManageAttendance() {
 
     return (
         <div className="bg-gray-50 p-4 font-sans pb-24 min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm mb-4">
                     <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-blue-600 transition">
                         <i className="fas fa-arrow-left text-xl"></i>
@@ -155,7 +155,7 @@ export default function ManageAttendance() {
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-sm p-5 mb-4 border-t-4 border-blue-600">
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mb-4">
                         <div>
                             <h2 className="text-xs font-bold text-gray-400 uppercase mb-2"><i className="fas fa-calendar-alt text-blue-500 mr-2"></i>Date</h2>
                             <input type="date" value={date} onChange={e => setDate(e.target.value)} max={new Date().toISOString().split('T')[0]} className="w-full p-2.5 border border-gray-200 rounded-xl outline-none bg-gray-50 font-bold text-gray-700 text-sm focus:ring-2 focus:ring-blue-500" />
@@ -225,7 +225,7 @@ export default function ManageAttendance() {
                                             <span className="font-bold text-gray-800 text-sm capitalize">{student.name}</span>
                                             <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">Class {student.class}</span>
                                         </div>
-                                        <div className="grid grid-cols-2 gap-2">
+                                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                                             <button onClick={() => markAttendance(student.id, 'present')} className={`${btnPresent} py-2 rounded-lg text-xs font-bold transition uppercase`}>
                                                 <i className="fas fa-check mr-1"></i> Present
                                             </button>
@@ -241,7 +241,7 @@ export default function ManageAttendance() {
                 </div>
 
                 {!isViewMode && isLoaded && students.length > 0 && (
-                    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-200 p-4 z-50">
+                    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl w-full bg-white border-t border-gray-200 p-4 z-50">
                         <button onClick={submitAttendance} disabled={isSubmitting} className="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl hover:bg-blue-700 shadow-md transition text-lg flex justify-center items-center">
                             {isSubmitting ? <i className="fas fa-spinner fa-spin mr-2"></i> : <i className="fas fa-check-circle mr-2"></i>} 
                             {isSubmitting ? "Submitting..." : "Submit Attendance"}

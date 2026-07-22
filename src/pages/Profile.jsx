@@ -76,7 +76,7 @@ export default function Profile() {
 
     return (
         <div className="bg-gray-50 min-h-screen font-sans pb-24">
-            <div className="max-w-md mx-auto bg-gray-50 min-h-screen relative shadow-sm">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto bg-gray-50 min-h-screen relative shadow-sm">
                 <div className="bg-gradient-to-r from-blue-600 to-indigo-700 h-44 rounded-b-[2.5rem] relative flex flex-col items-center pt-6 text-white shadow-lg">
                     <div className="flex justify-between items-center w-full px-6 mb-2">
                         <button onClick={() => navigate('/dashboard')} className="bg-white/20 hover:bg-white/30 p-2 rounded-xl backdrop-blur-sm transition">

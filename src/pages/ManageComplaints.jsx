@@ -66,7 +66,7 @@ export default function ManageComplaints() {
                 <h1 className="text-lg font-bold">Helpdesk & Complaints</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="flex justify-between items-center mb-4 px-1">
                     <h2 className="text-sm font-bold text-slate-800">Student Tickets</h2>
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-200 px-2 py-1 rounded-md">{complaints.length} Total</span>

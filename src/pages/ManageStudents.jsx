@@ -202,7 +202,7 @@ export default function ManageStudents() {
                             <button onClick={resetForm} type="button" className="text-sm text-blue-600 font-bold hover:underline"><i className="fas fa-redo mr-1"></i>Reset Form</button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                            <div className="grid grid-cols-1 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mb-4">
                                 <div><label className="block text-xs font-bold text-gray-500 mb-1">Student ID (Auto)</label><input type="text" name="stuId" value={formData.stuId} readOnly className="w-full p-2.5 border rounded-lg text-gray-500 bg-gray-200 font-mono text-sm cursor-not-allowed" /></div>
                                 <div><label className="block text-xs font-bold text-gray-500 mb-1">Admission No (Auto)</label><input type="text" name="admNo" value={formData.admNo} readOnly className="w-full p-2.5 border rounded-lg text-gray-500 bg-gray-200 font-mono text-sm cursor-not-allowed" /></div>
                                 <div><label className="block text-xs font-bold text-gray-600 mb-1">Admission Date *</label><input type="date" name="admDate" value={formData.admDate} onChange={handleChange} required className="w-full p-2.5 border rounded-lg focus:ring-2 ring-blue-200 outline-none" /></div>
@@ -212,7 +212,7 @@ export default function ManageStudents() {
 
                             <div>
                                 <h3 className="text-sm font-bold text-gray-600 uppercase mb-4 border-b pb-2"><i className="fas fa-user-circle mr-2"></i>Personal Details</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 gap-4">
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">First Name *</label><input type="text" name="fName" value={formData.fName} onChange={handleChange} required className="w-full p-2.5 border rounded-lg focus:ring-2 ring-blue-200 outline-none" /></div>
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Middle Name</label><input type="text" name="mName" value={formData.mName} onChange={handleChange} className="w-full p-2.5 border rounded-lg focus:ring-2 ring-blue-200 outline-none" /></div>
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Last Name *</label><input type="text" name="lName" value={formData.lName} onChange={handleChange} required className="w-full p-2.5 border rounded-lg focus:ring-2 ring-blue-200 outline-none" /></div>
@@ -232,7 +232,7 @@ export default function ManageStudents() {
                             {/* Additional Sections Collapsed for brevity, but full functionality retained */}
                             <div>
                                 <h3 className="text-sm font-bold text-gray-600 uppercase mb-4 border-b pb-2"><i className="fas fa-graduation-cap mr-2"></i>Academic Info</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 gap-4">
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Class *</label>
                                         <select name="className" value={formData.className} onChange={handleChange} required className="w-full p-2.5 border rounded-lg outline-none">
                                             {[...Array(12).keys()].map(i => <option key={i+1} value={String(i+1)}>Class {i+1}</option>)}

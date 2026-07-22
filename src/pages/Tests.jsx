@@ -126,7 +126,7 @@ export default function Tests() {
 
     return (
         <div className="bg-gray-50 font-sans min-h-screen">
-            <div className="max-w-md mx-auto relative h-full">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto relative h-full">
                 {view === 'list' && (
                     <div className="pb-20">
                         <div className="bg-purple-600 text-white p-4 rounded-b-3xl shadow-md sticky top-0 z-50">
@@ -200,7 +200,7 @@ export default function Tests() {
                             ))}
                         </div>
 
-                        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-200 p-4 z-50">
+                        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl w-full bg-white border-t border-gray-200 p-4 z-50">
                             <button onClick={() => submitTest(false)} disabled={submitting} className="w-full bg-purple-600 text-white font-bold py-3.5 rounded-xl hover:bg-purple-700 shadow-md transition text-lg">
                                 {submitting ? "Processing Results..." : "Submit Test"}
                             </button>

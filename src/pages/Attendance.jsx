@@ -61,7 +61,7 @@ export default function Attendance() {
                 <h1 className="text-lg font-bold">Attendance Record</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="bg-white rounded-2xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-100 p-6 mb-6">
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Overall Summary</p>
                     <div className="flex items-baseline gap-2 mb-4">
@@ -71,7 +71,7 @@ export default function Attendance() {
                     <div className="w-full bg-slate-100 h-2.5 rounded-full mb-6 overflow-hidden">
                         <div className="bg-blue-600 h-full rounded-full transition-all duration-700 ease-out" style={{ width: `${attData.percentage}%` }}></div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                         <div className="bg-emerald-50/50 rounded-[16px] p-4 border border-emerald-100">
                             <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wide mb-1">Total Present</p>
                             <h3 className="text-2xl font-black text-emerald-600">{attData.presentCount}</h3>

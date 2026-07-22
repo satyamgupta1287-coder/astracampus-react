@@ -60,7 +60,7 @@ export default function Complaints() {
 
     return (
         <div className="bg-gray-50 p-4 font-sans min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm mb-6">
                     <button onClick={() => navigate('/dashboard')} className="text-gray-500 hover:text-red-600 transition">
                         <i className="fas fa-arrow-left text-xl"></i>

@@ -196,7 +196,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="bg-gray-50 font-sans pb-20 min-h-screen">
-      <div className="max-w-md mx-auto">
+      <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
         <div className="bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-b-[2rem] p-6 text-white shadow-lg relative pb-12">
           <div className="flex justify-between items-center mb-4">
             <div>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="px-4 -mt-8 relative z-10">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
             <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center">
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">
                 Total Students
@@ -240,7 +240,7 @@ export default function AdminDashboard() {
           <h2 className="text-lg font-bold text-gray-800 mb-4 px-1">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
             {actionButtons.map((btn, i) => (
               <button
                 key={btn.path || i}

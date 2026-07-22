@@ -252,7 +252,7 @@ export default function UploadVideo() {
                 </div>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 {currentStep === 1 && (
                     <div className="space-y-4">
                         <button onClick={() => {
@@ -311,7 +311,7 @@ export default function UploadVideo() {
                         <div className="bg-white p-5 rounded-[20px] shadow-sm border border-slate-100 mb-8">
                             <h2 className="text-sm font-bold text-slate-800 mb-4"><i className="fas fa-cloud-upload-alt text-blue-500 mr-2"></i>Upload to <span className="text-blue-600">{activeSubject}</span></h2>
                             <form onSubmit={handleVideoSubmit} className="space-y-3">
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                                     <div><label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Target Class</label><input type="text" value={targetClass} onChange={e => setTargetClass(e.target.value)} required placeholder="e.g. 10" className="w-full p-2.5 text-sm border rounded-xl outline-none focus:border-blue-500 bg-slate-50" /></div>
                                     <div><label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Teacher Name</label><input type="text" value={teacherName} onChange={e => setTeacherName(e.target.value)} required placeholder="e.g. Mr. Sharma" className="w-full p-2.5 text-sm border rounded-xl outline-none focus:border-blue-500 bg-slate-50" /></div>
                                 </div>
@@ -324,7 +324,7 @@ export default function UploadVideo() {
                                     <p className="text-[10px] text-slate-400 mt-1">{videoFile ? formatBytes(videoFile.size) : ""}</p>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-3 pt-1">
+                                <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 pt-1">
                                     <button type="button" onClick={() => openCloudinary('notes')} className={`p-3 border rounded-xl flex flex-col items-center justify-center gap-1 active:scale-95 transition ${notesUrl ? 'bg-emerald-100 border-emerald-300 text-emerald-700' : 'bg-emerald-50 border-emerald-200 text-emerald-600'}`}>
                                         <i className="fas fa-file-pdf text-xl mb-1"></i>
                                         <span className="text-[10px] font-bold uppercase tracking-wide">{notesUrl ? "Notes Attached ✓" : "Attach Notes"}</span>
@@ -389,7 +389,7 @@ export default function UploadVideo() {
                         <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Batch Name *</label>
                         <input type="text" value={newCourseName} onChange={e => setNewCourseName(e.target.value)} disabled={isEditingCourse} placeholder="e.g. Arjuna JEE 2026" className="w-full p-2.5 border rounded-xl outline-none focus:border-blue-500 bg-slate-50 mb-3 text-sm" />
                         
-                        <div className="grid grid-cols-2 gap-3 mb-3">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 mb-3">
                             <div><label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Selling Price (₹)</label><input type="number" value={coursePrice} onChange={e => setCoursePrice(e.target.value)} className="w-full p-2.5 border rounded-xl outline-none focus:border-blue-500 bg-slate-50 text-sm" /></div>
                             <div><label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Original Price (₹)</label><input type="number" value={courseOriginalPrice} onChange={e => setCourseOriginalPrice(e.target.value)} className="w-full p-2.5 border rounded-xl outline-none focus:border-blue-500 bg-slate-50 text-sm" /></div>
                         </div>

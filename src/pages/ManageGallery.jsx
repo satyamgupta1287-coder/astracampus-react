@@ -76,7 +76,7 @@ export default function ManageGallery() {
 
     return (
         <div className="bg-gray-50 p-4 font-sans pb-24 min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm mb-4">
                     <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-pink-500 transition">
                         <i className="fas fa-arrow-left text-xl"></i>
@@ -95,7 +95,7 @@ export default function ManageGallery() {
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Uploaded Photos</h2>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                         {photos.length === 0 ? (
                             <p className="col-span-2 text-center text-sm text-gray-400 py-4">No photos uploaded yet.</p>
                         ) : (

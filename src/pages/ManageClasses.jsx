@@ -96,7 +96,7 @@ export default function ManageClasses() {
 
     return (
         <div className="bg-gray-50 p-4 font-sans pb-24 min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm mb-4">
                     <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-blue-600 transition">
                         <i className="fas fa-arrow-left text-xl"></i>
@@ -108,7 +108,7 @@ export default function ManageClasses() {
                 <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 border-t-4 border-red-500">
                     <h2 className="text-sm font-bold text-gray-400 uppercase mb-4"><i className="fas fa-video text-red-500 mr-2"></i>Schedule New Class</h2>
                     <form onSubmit={handleSchedule} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             <div>
                                 <label className="block text-sm font-bold text-gray-700 mb-1">Target Class *</label>
                                 <select value={targetClass} onChange={e => setTargetClass(e.target.value)} required className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-red-500">
@@ -122,7 +122,7 @@ export default function ManageClasses() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             <div>
                                 <label className="block text-sm font-bold text-gray-700 mb-1">Subject *</label>
                                 <input type="text" value={subject} onChange={e => setSubject(e.target.value)} required placeholder="e.g., Math" className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-red-500" />

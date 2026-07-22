@@ -92,11 +92,11 @@ export default function Leave() {
                 <h1 className="text-lg font-bold">Leave Application</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="bg-white p-5 rounded-[20px] shadow-sm border border-slate-100 mb-8">
                     <h2 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2"><i className="fas fa-calendar-plus text-green-500"></i> Request Leave</h2>
                     <form onSubmit={handleApply} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                             <div>
                                 <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">From Date</label>
                                 <input type="date" min={new Date().toISOString().split("T")[0]} value={formData.fromDate} onChange={e => setFormData({...formData, fromDate: e.target.value, toDate: formData.toDate < e.target.value ? e.target.value : formData.toDate})} required className="w-full p-2.5 text-sm border border-slate-200 rounded-xl outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 bg-slate-50" />

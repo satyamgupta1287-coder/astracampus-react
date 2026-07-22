@@ -68,7 +68,7 @@ export default function ManageLeaves() {
                 <h1 className="text-lg font-bold">Leave Requests</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="space-y-4">
                     {leaves.length === 0 ? (
                         <div className="bg-white p-6 rounded-2xl border text-center"><p className="text-sm text-slate-400 font-medium">No leave requests pending.</p></div>

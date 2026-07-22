@@ -485,7 +485,7 @@ export default function ManageFees() {
                 {/* Dashboard Tab */}
                 {activeTab === "dashboard" && (
                     <div className="space-y-6 animate-fade-in">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 gap-6">
                             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-center gap-5">
                                 <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shrink-0">
                                     <FaMoneyBillWave />
@@ -659,7 +659,7 @@ export default function ManageFees() {
                                     </div>
                                     
                                     {/* Fee Summary Cards */}
-                                    <div className="grid grid-cols-3 divide-x divide-slate-100 border-b border-slate-100">
+                                    <div className="grid grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 divide-x divide-slate-100 border-b border-slate-100">
                                         <div className="p-4 text-center bg-slate-50">
                                             <p className="text-[10px] font-bold text-slate-400 uppercase">Total Fee</p>
                                             <p className="text-lg font-black text-slate-700">₹ {computedTotalFee}</p>
@@ -740,7 +740,7 @@ export default function ManageFees() {
                                                                 <span className="font-bold text-slate-800">₹{h.amount} {h.frequency === 'Monthly' ? '/ mo' : ''}</span>
                                                             </div>
                                                             {sel.selected && h.frequency === 'Monthly' && (
-                                                                <div className="mt-3 grid grid-cols-4 md:grid-cols-6 gap-2">
+                                                                <div className="mt-3 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 md:grid-cols-6 gap-2">
                                                                     {unpaidMonths.map(m => (
                                                                         <label key={m} className={`text-xs font-bold px-2 py-1.5 rounded cursor-pointer text-center border transition ${sel.months?.includes(m) ? 'bg-indigo-100 border-indigo-300 text-indigo-700' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'}`}>
                                                                             <input 
@@ -769,7 +769,7 @@ export default function ManageFees() {
                                         )}
 
                                         <form onSubmit={handleCollectFee} className="space-y-4">
-                                            <div className="grid grid-cols-2 gap-4">
+                                            <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                                                 <div>
                                                     <label className="block text-xs font-bold text-slate-600 mb-1.5">Amount Paying Now (₹) *</label>
                                                     <input 
@@ -796,7 +796,7 @@ export default function ManageFees() {
                                                 </div>
                                             </div>
 
-                                            <div className="grid grid-cols-2 gap-4">
+                                            <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                                                 <div>
                                                     <label className="block text-xs font-bold text-slate-600 mb-1.5">Discount (₹)</label>
                                                     <input 
@@ -863,12 +863,12 @@ export default function ManageFees() {
 
                 {/* Structures Tab */}
                 {activeTab === "structures" && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 animate-fade-in">
                         {/* Create Structure Form */}
                         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                             <h3 className="text-lg font-bold text-slate-800 mb-6 border-b pb-2"><FaBuilding className="inline mr-2 text-indigo-500" />Create Master Fee Structure</h3>
                             
-                            <div className="grid grid-cols-2 gap-4 mb-4">
+                            <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mb-4">
                                 <div>
                                     <label className="block text-xs font-bold text-slate-600 mb-1.5">Class / Batch</label>
                                     <select 

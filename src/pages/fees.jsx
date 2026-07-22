@@ -95,7 +95,7 @@ export default function Fees() {
 
     return (
         <div className="bg-slate-50 min-h-screen font-sans pb-24 selection:bg-indigo-100">
-            <div className="max-w-md mx-auto relative h-full">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto relative h-full">
                 
                 {/* Header */}
                 <div className="flex justify-between items-center px-5 pt-6 pb-4 sticky top-0 bg-slate-50/80 backdrop-blur-md z-40 border-b border-slate-200/50">
@@ -122,7 +122,7 @@ export default function Fees() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Total Fee</p>
                                 <p className="text-lg font-bold text-slate-700">₹ {feeData.total.toLocaleString()}</p>

@@ -43,7 +43,7 @@ export default function TeacherDashboard() {
 
     return (
         <div className="bg-gray-50 font-sans pb-20 min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-b-[2rem] p-6 text-white shadow-lg relative pb-12">
                     <div className="flex justify-between items-center mb-4">
                         <div>
@@ -64,7 +64,7 @@ export default function TeacherDashboard() {
                 <div className="px-4 mt-8">
                     <h2 className="text-lg font-bold text-gray-800 mb-4 px-1">Your Daily Workflow</h2>
                     
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                         <button onClick={() => navigate('/manage-attendance')} className="bg-emerald-50 p-4 rounded-2xl flex flex-col items-center border border-emerald-100 hover:bg-emerald-100 transition shadow-sm">
                             <i className="fas fa-check-circle text-emerald-600 text-2xl mb-2"></i>
                             <span className="text-xs font-bold text-gray-700">Take Attendance</span>

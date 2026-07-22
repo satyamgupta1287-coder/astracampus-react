@@ -78,7 +78,7 @@ export default function Courses() {
                 </h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <h3 className="font-bold text-slate-800 mb-4 text-lg px-1 flex items-center gap-2">Premium Courses</h3>
                 
                 <div className="space-y-6">

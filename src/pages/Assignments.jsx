@@ -112,7 +112,7 @@ export default function Assignments() {
             </header>
 
             {uploadAlert && (
-                <div className="max-w-md mx-auto px-4 mb-4">
+                <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-4 mb-4">
                     <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-2">
                         <i className="fas fa-check-circle text-green-500 text-lg"></i>
                         <span>Assignment submitted successfully!</span>
@@ -120,7 +120,7 @@ export default function Assignments() {
                 </div>
             )}
 
-            <main className="max-w-md mx-auto px-4 space-y-4">
+            <main className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-4 space-y-4">
                 {loading ? (
                     <>
                         <div className="animate-pulse w-full h-32 bg-gray-200 rounded-2xl"></div>

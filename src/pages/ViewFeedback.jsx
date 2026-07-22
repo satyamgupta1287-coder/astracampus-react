@@ -43,7 +43,7 @@ export default function ViewFeedback() {
                 <h1 className="text-lg font-bold">Student Feedback</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="space-y-4">
                     {feedbacks.length === 0 ? (
                         <div className="bg-white p-6 rounded-2xl border text-center"><p className="text-sm text-slate-400 font-medium">No feedback received yet.</p></div>

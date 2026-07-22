@@ -179,7 +179,7 @@ export default function Login() {
 
   return (
     <div className="bg-slate-50 flex flex-col items-center justify-center min-h-screen p-4">
-      <div className="bg-white p-8 rounded-[24px] shadow-xl w-full max-w-md border border-slate-100 relative overflow-hidden">
+      <div className="bg-white p-8 rounded-[24px] shadow-xl w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl w-full border border-slate-100 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
         <div className="text-center mb-8 mt-2">
           <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight mb-1">

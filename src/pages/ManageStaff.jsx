@@ -189,7 +189,7 @@ export default function ManageStaff() {
                         <h2 className="text-xl font-bold text-gray-800 mb-6">{currentEditId ? "Edit Employee" : "Register New Employee"}</h2>
                         
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 gap-4">
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 mb-1">Employee ID (Auto)</label>
                                     <input type="text" value={formData.empId} readOnly className="w-full p-2.5 border rounded-lg bg-gray-100 font-mono text-sm" />
@@ -214,7 +214,7 @@ export default function ManageStaff() {
 
                             <div>
                                 <h3 className="text-sm font-bold text-gray-600 uppercase mb-4 border-b pb-2"><i className="fas fa-id-badge mr-2"></i>Personal Info</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Full Name *</label><input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required className="w-full p-2.5 border rounded-lg outline-none bg-gray-50" /></div>
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Email Address *</label><input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full p-2.5 border rounded-lg outline-none bg-gray-50" /></div>
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Mobile Number *</label><input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} required className="w-full p-2.5 border rounded-lg outline-none bg-gray-50" /></div>
@@ -228,7 +228,7 @@ export default function ManageStaff() {
 
                             <div>
                                 <h3 className="text-sm font-bold text-gray-600 uppercase mb-4 border-b pb-2"><i className="fas fa-briefcase mr-2"></i>Professional Details</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 gap-4">
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Qualification</label><input type="text" name="qualification" value={formData.qualification} onChange={handleChange} placeholder="e.g. M.Sc, B.Ed" className="w-full p-2.5 border rounded-lg outline-none bg-gray-50" /></div>
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Department / Subject</label><input type="text" name="department" value={formData.department} onChange={handleChange} placeholder="e.g. Mathematics" className="w-full p-2.5 border rounded-lg outline-none bg-gray-50" /></div>
                                     <div><label className="block text-xs font-bold text-gray-600 mb-1">Date of Joining *</label><input type="date" name="doj" value={formData.doj} onChange={handleChange} required className="w-full p-2.5 border rounded-lg outline-none bg-gray-50" /></div>

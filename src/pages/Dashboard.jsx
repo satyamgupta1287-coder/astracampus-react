@@ -186,7 +186,7 @@ export default function Dashboard() {
 
   return (
     <div className="bg-[#f8fafc] min-h-screen pb-24 font-sans text-slate-800 selection:bg-indigo-100 no-scrollbar">
-      <div className="max-w-md mx-auto min-h-screen relative">
+      <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto min-h-screen relative">
 
         {/* Top Header */}
         <div className="flex justify-between items-center px-6 pt-8 pb-2">
@@ -239,7 +239,7 @@ export default function Dashboard() {
         {/* Quick Access Grid */}
         <div className="px-5 mt-8">
             <h2 className="text-base font-bold text-slate-800 mb-4 px-1">Quick Access</h2>
-            <div className="grid grid-cols-4 gap-y-5 gap-x-4">
+            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-y-5 gap-x-4">
                 
                 <div onClick={() => navigate('/live-classes')} className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform">
                     <div className="w-14 h-14 rounded-[18px] bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.03)] border border-slate-200 flex items-center justify-center text-red-500 text-xl">
@@ -397,7 +397,7 @@ export default function Dashboard() {
         </div>
 
         {/* Bottom Navigation */}
-        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-100 flex justify-around items-center pt-3 pb-5 z-50 px-2 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]">
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl w-full bg-white border-t border-slate-100 flex justify-around items-center pt-3 pb-5 z-50 px-2 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]">
             <button onClick={() => navigate('/dashboard')} className="flex flex-col items-center gap-1.5 w-16 text-indigo-600 active:scale-95 transition-transform">
                 <FaHome className="text-lg" />
                 <span className="text-[9px] font-bold tracking-wide">Home</span>

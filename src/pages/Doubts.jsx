@@ -76,7 +76,7 @@ export default function Doubts() {
 
     return (
         <div className="bg-gray-50 pb-20 font-sans min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="bg-blue-600 text-white p-4 rounded-b-3xl shadow-md sticky top-0 z-50">
                     <div className="flex justify-between items-center mb-4">
                         <button onClick={() => navigate('/dashboard')} className="hover:bg-white/20 p-2 rounded-xl transition">

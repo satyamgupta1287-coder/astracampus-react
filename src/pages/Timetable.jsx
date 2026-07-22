@@ -46,7 +46,7 @@ export default function Timetable() {
                 <h1 className="text-lg font-bold">Class Timetable</h1>
             </div>
 
-            <div className="max-w-md mx-auto mt-5">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto mt-5">
                 <div className="flex overflow-x-auto gap-2 px-5 pb-2 no-scrollbar">
                     {days.map(day => (
                         <button key={day} onClick={() => setCurrentDay(day)} className={`px-5 py-2 rounded-full text-sm font-bold shrink-0 transition ${currentDay === day ? 'bg-indigo-600 text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200'}`}>

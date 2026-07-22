@@ -88,11 +88,11 @@ export default function ManageTimetable() {
                 <h1 className="text-lg font-bold">Manage Timetable</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="bg-white p-5 rounded-[20px] shadow-sm border border-slate-100 mb-8">
                     <h2 className="text-sm font-bold text-slate-800 mb-4"><i className="fas fa-plus-circle text-indigo-500 mr-2"></i>Add Period</h2>
                     <form onSubmit={handleAdd} className="space-y-3">
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                             <div>
                                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Class</label>
                                 <input type="text" value={targetClass} onChange={e => setTargetClass(e.target.value)} required placeholder="e.g. 10" className="w-full p-2.5 text-sm border rounded-xl outline-none focus:border-indigo-500 bg-slate-50" />
@@ -106,7 +106,7 @@ export default function ManageTimetable() {
                                 </select>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                             <div>
                                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Subject</label>
                                 <input type="text" value={subject} onChange={e => setSubject(e.target.value)} required placeholder="e.g. Math" className="w-full p-2.5 text-sm border rounded-xl outline-none focus:border-indigo-500 bg-slate-50" />

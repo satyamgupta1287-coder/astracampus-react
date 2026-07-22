@@ -63,7 +63,7 @@ export default function Feedback() {
                 <h1 className="text-lg font-bold">Share Feedback</h1>
             </div>
 
-            <div className="max-w-md mx-auto px-5 mt-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-5 mt-6">
                 <div className="text-center mb-6 px-4">
                     <div className="w-16 h-16 bg-sky-100 text-sky-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-3">
                         <i className="fas fa-heart"></i>

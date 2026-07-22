@@ -154,7 +154,7 @@ export default function CreateAssignment() {
                 <p className="text-xs text-purple-200 mt-1">Upload assignments and grade submissions in one place</p>
             </header>
 
-            <div className="max-w-md mx-auto px-4 mt-6 space-y-6">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto px-4 mt-6 space-y-6">
                 <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
                     <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                         <i className="fas fa-plus-circle text-purple-600"></i> Create New Assignment

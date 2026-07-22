@@ -39,7 +39,7 @@ export default function Gallery() {
 
     return (
         <div className="bg-gray-50 pb-20 font-sans min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="bg-pink-500 text-white p-4 rounded-b-3xl shadow-md sticky top-0 z-50">
                     <div className="flex justify-between items-center mb-4">
                         <button onClick={() => navigate('/dashboard')} className="hover:bg-white/20 p-2 rounded-xl transition">
@@ -52,7 +52,7 @@ export default function Gallery() {
                 </div>
 
                 <div className="px-4 mt-6">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                         {loading ? (
                             <div className="col-span-2 text-center py-10">
                                 <i className="fas fa-spinner fa-spin text-3xl text-pink-500 mb-2"></i>

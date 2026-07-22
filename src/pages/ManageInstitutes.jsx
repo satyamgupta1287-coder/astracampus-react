@@ -64,7 +64,7 @@ export default function ManageInstitutes() {
 
     return (
         <div className="bg-gray-50 p-4 min-h-screen">
-            <div className="max-w-md mx-auto bg-white rounded-2xl shadow-sm p-6 mt-10 border border-slate-100">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto bg-white rounded-2xl shadow-sm p-6 mt-10 border border-slate-100">
                 <div className="flex items-center justify-between mb-6">
                     <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-indigo-600 transition">
                         <i className="fas fa-arrow-left text-xl"></i>

@@ -77,7 +77,7 @@ export default function ManageMaterials() {
 
     return (
         <div className="bg-gray-50 p-4 font-sans pb-24 min-h-screen">
-            <div className="max-w-md mx-auto">
+            <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                 <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm mb-4">
                     <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-blue-600 transition">
                         <i className="fas fa-arrow-left text-xl"></i>
@@ -95,7 +95,7 @@ export default function ManageMaterials() {
                             <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g., Chapter 1 Notes" className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500" />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             <div>
                                 <label className="block text-sm font-bold text-gray-700 mb-1">Subject</label>
                                 <input type="text" value={subject} onChange={e => setSubject(e.target.value)} placeholder="e.g., Science" className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500" />
@@ -111,7 +111,7 @@ export default function ManageMaterials() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:grid-cols-5 lg:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             <div>
                                 <label className="block text-sm font-bold text-gray-700 mb-1">Year (Optional)</label>
                                 <input type="text" value={year} onChange={e => setYear(e.target.value)} placeholder="e.g., 2026" className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500" />
